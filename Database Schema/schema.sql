@@ -1,43 +1,33 @@
-if (DB_ID('Ecommerce') is not null)
-begin
-use master
-drop database [Ecommerce]
-end
+--if (DB_ID('Codex') is not null)
+--begin
+--use master
+--drop database [Codex]
+--end
 
-create database Ecommerce
+--create database Codex
+--go
+
+use [Codex]
 go
 
-use [Ecommerce]
-go
-
-create table admins (
-adminID int primary key identity(1000,1),
-email varchar(150) unique not null,
-password varchar(max) not null,
-firstName nvarchar(100) not null,
-lastName nvarchar(100) not null,
-created_at datetime not null
-)
-go
-
-create table users (
-userID int primary key identity(1000,1),
-firstName nvarchar(100) not null,
-lastName nvarchar(100) not null,
-email varchar(150) unique not null,
-username varchar(100) unique not null,
-phone_number varchar(20),
-date_of_birth date,
-avatar varchar(200),
-password varchar(max) not null,
-created_at datetime not null,
-isdeleted bit not null
-)
-go
+--create table users (
+--id int primary key identity(1000,1),
+--firstName nvarchar(100) not null,
+--lastName nvarchar(100) not null,
+--email varchar(150) unique not null,
+--username varchar(100) unique not null,
+--phone_number varchar(20),
+--date_of_birth date,
+--avatar varchar(200),
+--password varchar(max) not null,
+--created_at datetime not null,
+--isdeleted bit not null
+--)
+--go
 
 create table addresses(
 addressID int primary key identity(500,1),
-userID int FOREIGN key references Users(userID),
+id int FOREIGN key references AspNetUsers(id),
 address_line_1 nvarchar(150) not null,
 address_line_2 nvarchar(150),
 city nvarchar(50) not null,
@@ -121,7 +111,7 @@ created_at datetime not null
 go*/
 
 create table carts(
-cartID int primary key references users(userID) on delete cascade,
+cartID int primary key references AspNetUsers(id) on delete cascade,
 total int not null,
 created_at datetime not null,
 updated_at datetime not null
@@ -139,19 +129,19 @@ primary key clustered (cartID,productID)
 go
 
 create TRIGGER tr_createCart
-on [users]
+on [AspNetUsers]
 AFTER insert
 as
 begin
-	declare @userID int= (select top 1 userID from inserted)
+	declare @id int= (select top 1 id from inserted)
 	declare @currentDate datetime=GETDATE()
-	insert into [carts] values (@userID,0,@currentDate , @currentDate)
+	insert into [carts] values (@id,0,@currentDate , @currentDate)
 end
 go
 
 create table orders(
 orderID int primary key identity,
-userID int foreign key references users(userID),
+id int foreign key references AspNetUsers(id),
 total int not null,
 created_at datetime not null,
 updated_at datetime not null
