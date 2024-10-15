@@ -1,3 +1,7 @@
+using IT_Store.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 namespace IT_Store
 {
     public class Program
@@ -31,6 +35,13 @@ namespace IT_Store
         private static void AddServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<CodexContext>(options =>
+            {
+                options.UseSqlServer("name=ConnectionStrings:development");
+            });
+
+            services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<CodexContext>();
         }
     }
 }
