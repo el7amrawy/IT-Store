@@ -7,7 +7,7 @@ namespace IT_Store
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            AddServices(builder.Services);
 
             var app = builder.Build();
 
@@ -27,6 +27,10 @@ namespace IT_Store
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
+        }
+        private static void AddServices(IServiceCollection services)
+        {
+            services.AddControllersWithViews();
         }
     }
 }
