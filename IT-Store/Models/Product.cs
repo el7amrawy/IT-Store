@@ -1,4 +1,6 @@
-﻿namespace IT_Store.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace IT_Store.Models;
 
 public partial class Product
 {
@@ -17,13 +19,13 @@ public partial class Product
     public int Price { get; set; }
 
     public int? Discount { get; set; }
-
+    [Display(Name ="In Stock")]
     public bool Instock { get; set; }
 
     public int Quantity { get; set; }
-
+    [Display(Name = "Category")]
     public int? CategoryId { get; set; }
-
+    [Display(Name = "Brand")]
     public int? BrandId { get; set; }
 
     public DateTime CreatedAt { get; set; }

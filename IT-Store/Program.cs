@@ -29,9 +29,9 @@ namespace IT_Store
             app.UseAuthorization();
 
             app.MapControllerRoute(
-                name:"admin",
-                pattern: "admin/{action=Dashboard}",
-                new {controller="Admin"}
+                name: "dashboard",
+                pattern: "Admin/{action=Dashboard}",
+                new { controller = "Admin" }
                 );
 
             app.MapControllerRoute(
