@@ -1,4 +1,6 @@
 using IT_Store.Models;
+using IT_Store.Repositories.Implements;
+using IT_Store.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +48,8 @@ namespace IT_Store
             {
                 options.UseSqlServer("name=ConnectionStrings:development");
             });
+
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<CodexContext>();
         }
