@@ -8,7 +8,6 @@ namespace IT_Store.ViewModels
 	{
 		[Required]
 		public string Name { get; set; } = null!;
-		[Required]
 		public string? Description { get; set; }
 		[NotMapped]
 		public Brand Brand { 
