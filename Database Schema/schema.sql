@@ -73,8 +73,10 @@ description nvarchar(500),
 summary nvarchar(500),
 cover varchar(200),
 serialNumber varchar(200) not null,
-basePrice int not null,
+price int not null,
 discount int,
+instock bit not null,
+quantity int not null,
 categoryID int foreign key references categories(categoryID),
 brandID int foreign key references brands(brandID),
 created_at datetime not null,
@@ -87,7 +89,6 @@ create table product_attributes(
 ID int primary key,
 name varchar(100) not null,
 value varchar(100) not null,
-addOnPrice int not null,
 created_at datetime not null
 )
 go
