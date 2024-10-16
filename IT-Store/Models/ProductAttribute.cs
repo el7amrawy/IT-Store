@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace IT_Store.Models;
+﻿namespace IT_Store.Models;
 
 public partial class ProductAttribute
 {
@@ -10,8 +7,6 @@ public partial class ProductAttribute
     public string Name { get; set; } = null!;
 
     public string Value { get; set; } = null!;
-
-    public int AddOnPrice { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

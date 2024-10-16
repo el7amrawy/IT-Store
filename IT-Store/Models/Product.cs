@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace IT_Store.Models;
+﻿namespace IT_Store.Models;
 
 public partial class Product
 {
@@ -17,9 +14,13 @@ public partial class Product
 
     public string SerialNumber { get; set; } = null!;
 
-    public int BasePrice { get; set; }
+    public int Price { get; set; }
 
     public int? Discount { get; set; }
+
+    public bool Instock { get; set; }
+
+    public int Quantity { get; set; }
 
     public int? CategoryId { get; set; }
 
