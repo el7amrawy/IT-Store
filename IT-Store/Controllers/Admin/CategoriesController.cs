@@ -1,6 +1,7 @@
 ﻿using IT_Store.Repositories.Interfaces;
 using IT_Store.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace IT_Store.Controllers.Admin
 {
@@ -19,7 +20,9 @@ namespace IT_Store.Controllers.Admin
 			return View("~/Views/Admin/Categories/Index.cshtml",_repository.GetAll());
 		}
 		[HttpGet]
-		public IActionResult Add() {
+		public IActionResult Add([FromServices] IParentCategoryRepository rep) {
+			var parentCategories = rep.GetAll();
+			ViewBag.ParentCategories = new SelectList(parentCategories, "CategoryId","Name");
 			return View("~/Views/Admin/Categories/Add.cshtml");
 		}
         [HttpPost]

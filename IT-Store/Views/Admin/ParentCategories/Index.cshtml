@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ParentCategory>
+@{
+	ViewData["Title"] = "Parent Category";
+	Layout = "~/Views/Shared/_Admin-Layout.cshtml";
+}
+
+<a class=" m-3 btn bg-primary text-white" asp-action="Add" asp-asp-controller="ParentCategory">Add Category</a>
+
+<div class="row">
+	<div class="col-12 col-lg-8 col-xxl-12 d-flex">
+		<div class="card flex-fill">
+			<div class="card-header">
+
+				<h5 class="card-title mb-0">Parent Category</h5>
+			</div>
+			<table class="table table-hover my-0">
+				<thead>
+					<tr>
+						<th>@Html.DisplayNameFor(model => model.Name)</th>
+						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.CreatedAt)</th>
+						<th class="d-none d-md-table-cell"></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td>@Html.DisplayFor(modelItem => item.Name)</td>
+							<td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+							<td class="d-none d-xl-table-cell">
+								<a class="btn text-white bg-secondary" asp-action="Edit" asp-controller="ParentCategory" asp-route-id="@item.CategoryId">
+									<i class="align-middle" data-feather="edit"></i> <span class="align-middle">Edit</span>
+								</a>
+								<a class="btn text-white bg-danger" asp-action="Delete" asp-controller="ParentCategory" asp-route-id="@item.CategoryId">
+									<i class="align-middle" data-feather="delete"></i> <span class="align-middle">Delete</span>
+								</a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
