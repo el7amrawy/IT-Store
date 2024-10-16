@@ -51,8 +51,9 @@ namespace IT_Store
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
+			services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-            services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<CodexContext>();
+			services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<CodexContext>();
         }
     }
 }
