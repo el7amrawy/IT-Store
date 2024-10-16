@@ -58,7 +58,7 @@ go
 
 create table brands(
 brandID int primary key identity,
-name nvarchar(150) not null,
+name nvarchar(150) unique not null,
 description nvarchar(200),
 created_at datetime not null,
 deleted_at datetime,
