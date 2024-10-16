@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace IT_Store.Models;
 
@@ -10,7 +9,7 @@ public partial class Brand
     public string Name { get; set; } = null!;
 
     public string? Description { get; set; }
-
+    [Display(Name ="Created at")]
     public DateTime CreatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }

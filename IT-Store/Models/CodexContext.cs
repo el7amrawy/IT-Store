@@ -33,9 +33,6 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 
     public virtual DbSet<ProductAttribute> ProductAttributes { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("name=ConnectionStrings:development");
-
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		modelBuilder.Entity<Address>(entity =>
@@ -73,29 +70,31 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 				.HasForeignKey(d => d.Id)
 				.HasConstraintName("FK__addresses__id__5EBF139D");
 		});
-		modelBuilder.Entity<Brand>(entity =>
-		{
-			entity.HasKey(e => e.BrandId).HasName("PK__brands__06B772B9402C7536");
+        modelBuilder.Entity<Brand>(entity =>
+        {
+            entity.HasKey(e => e.BrandId).HasName("PK__brands__06B772B9402C7536");
 
-			entity.ToTable("brands");
+            entity.ToTable("brands");
 
-			entity.Property(e => e.BrandId).HasColumnName("brandID");
-			entity.Property(e => e.CreatedAt)
-				.HasColumnType("datetime")
-				.HasColumnName("created_at");
-			entity.Property(e => e.DeletedAt)
-				.HasColumnType("datetime")
-				.HasColumnName("deleted_at");
-			entity.Property(e => e.Description)
-				.HasMaxLength(200)
-				.HasColumnName("description");
-			entity.Property(e => e.Isdeleted).HasColumnName("isdeleted");
-			entity.Property(e => e.Name)
-				.HasMaxLength(150)
-				.HasColumnName("name");
-		});
+            entity.HasIndex(e => e.Name, "UQ__brands__72E12F1B9E9BC4D7").IsUnique();
 
-		modelBuilder.Entity<Cart>(entity =>
+            entity.Property(e => e.BrandId).HasColumnName("brandID");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_at");
+            entity.Property(e => e.Description)
+                .HasMaxLength(200)
+                .HasColumnName("description");
+            entity.Property(e => e.Isdeleted).HasColumnName("isdeleted");
+            entity.Property(e => e.Name)
+                .HasMaxLength(150)
+                .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<Cart>(entity =>
 		{
 			entity.HasKey(e => e.CartId).HasName("PK__carts__415B03D8321E2C21");
 

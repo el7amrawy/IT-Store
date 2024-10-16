@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Brand>
+@{
+    ViewData["Title"] = "Brands";
+    Layout = "~/Views/Shared/_Admin-Layout.cshtml";
+}
+
+<a class=" m-3 btn bg-primary text-white" asp-action="Add" asp-asp-controller="Brands">Add Brand</a>
+
+<div class="row">
+	<div class="col-12 col-lg-8 col-xxl-12 d-flex">
+		<div class="card flex-fill">
+			<div class="card-header">
+
+				<h5 class="card-title mb-0">Brands</h5>
+			</div>
+			<table class="table table-hover my-0">
+				<thead>
+					<tr>
+						<th>@Html.DisplayNameFor(model=>model.Name)</th>
+						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.CreatedAt)</th>
+						<th class="d-none d-md-table-cell"></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td>@Html.DisplayFor(modelItem=>item.Name)</td>
+							<td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem=>item.CreatedAt)</td>
+							<td class="d-none d-xl-table-cell">
+								<a class="btn text-white bg-secondary" asp-action="Edit" asp-controller="Brands">Edit</a>
+							</td>
+						</tr>	
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
