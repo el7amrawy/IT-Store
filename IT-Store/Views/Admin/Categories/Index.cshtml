@@ -18,6 +18,7 @@
 					<tr>
 						<th>@Html.DisplayNameFor(model => model.Name)</th>
 						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.CreatedAt)</th>
+						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.ParentCategoryId)</th>
 						<th class="d-none d-md-table-cell"></th>
 					</tr>
 				</thead>
@@ -27,6 +28,7 @@
 						<tr>
 							<td>@Html.DisplayFor(modelItem => item.Name)</td>
 							<td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+							<td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.ParentCategory.Name)</td>
 							<td class="d-none d-xl-table-cell">
 								<a class="btn text-white bg-secondary" asp-action="Edit" asp-controller="Categories" asp-route-id="@item.CategoryId">
 									<i class="align-middle" data-feather="edit"></i> <span class="align-middle">Edit</span>

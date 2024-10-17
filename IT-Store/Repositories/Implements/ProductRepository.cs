@@ -11,17 +11,27 @@ namespace IT_Store.Repositories.Implements
 		{
 			_db = db;
 		}
-
-		public override Product GetById(int id)
+        public override IEnumerable<Product> GetAll()
+        {
+            return _db.Products.Where(p=>!p.Isdeleted).ToList();
+        }
+        public override Product GetById(int id)
 		{
 			if (!IsExisted(id))
 				throw new Exception("Product is not found");
-			return _db.Products.FirstOrDefault(p=>p.ProductId == id);
+			return _db.Products.FirstOrDefault(p=> !p.Isdeleted && p.ProductId == id);
 		}
-
-		public override bool IsExisted(int id)
+        public override void Delete(int id)
+        {
+			var product = GetById(id);
+			product.Isdeleted = true;
+			product.DeletedAt = DateTime.Now;
+			Update(product);
+        }
+        public override bool IsExisted(int id)
 		{
 			return _db.Products.Any(p=>p.ProductId == id);
 		}
+		
 	}
 }

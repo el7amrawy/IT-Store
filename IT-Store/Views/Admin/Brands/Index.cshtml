@@ -28,6 +28,9 @@
 							<td>@Html.DisplayFor(modelItem=>item.Name)</td>
 							<td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem=>item.CreatedAt)</td>
 							<td class="d-none d-xl-table-cell">
+								<a class="btn text-white bg-primary" asp-action="Details" asp-controller="Brands" asp-route-id="@item.BrandId">
+									<i class="align-middle" data-feather="info"></i> <span class="align-middle">Details</span>
+								</a>
 								<a class="btn text-white bg-secondary" asp-action="Edit" asp-controller="Brands" asp-route-id="@item.BrandId">
 									<i class="align-middle" data-feather="edit"></i> <span class="align-middle">Edit</span>
 								</a>

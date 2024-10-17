@@ -17,7 +17,7 @@ namespace IT_Store.Controllers.Admin
 		[HttpGet]
 		public IActionResult Index()
 		{
-			return View("~/Views/Admin/Categories/Index.cshtml",_repository.GetAll());
+			return View("~/Views/Admin/Categories/Index.cshtml",_repository.GetAllWithParentCategory());
 		}
 		[HttpGet]
 		public IActionResult Add([FromServices] IParentCategoryRepository rep) {
@@ -34,6 +34,7 @@ namespace IT_Store.Controllers.Admin
 					var category=model.Category;
 					_repository.Add(category);
 					_repository.Save();
+					return RedirectToAction("Index");
 				}
 				catch (Exception ex)
 				{

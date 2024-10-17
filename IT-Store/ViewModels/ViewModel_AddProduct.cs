@@ -1,4 +1,5 @@
 ﻿using IT_Store.Models;
+using IT_Store.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace IT_Store.ViewModels
@@ -11,7 +12,7 @@ namespace IT_Store.ViewModels
 
         public string? Summary { get; set; }
 
-        public string? Cover { get; set; }
+        public IFormFile? Cover { get; set; }
         [Display(Name ="Serial Number")]
         public string SerialNumber { get; set; } = null!;
 
@@ -23,5 +24,24 @@ namespace IT_Store.ViewModels
         public int? CategoryId { get; set; }
         [Display(Name = "Brand")]
         public int? BrandId { get; set; }
+        public Product CreateProduct()
+        {
+            var date = DateTime.Now;
+            return new Product
+            {
+                Name = Name,
+                Description = Description,
+                Summary = Summary,
+                SerialNumber = SerialNumber,
+                Price = Price,
+                Discount = Discount??0,
+                Quantity = Quantity,
+                CategoryId = CategoryId,
+                BrandId = BrandId,
+                CreatedAt = date,
+                Instock = true,
+                Cover = FileUpload.SaveImage(Cover)
+            };
+        }
     }
 }

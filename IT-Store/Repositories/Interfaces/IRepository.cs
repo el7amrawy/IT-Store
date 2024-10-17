@@ -6,7 +6,7 @@
 		public IEnumerable<Model> GetAll();
 		public void Add(Model entity);
 		public void Update(Model entity);
-		public void Delete(Model entity);
+		public void Delete(int id);
 		public void Save();
 		public bool IsExisted(int id);
 	}

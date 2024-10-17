@@ -1,5 +1,6 @@
 ﻿using IT_Store.Models;
 using IT_Store.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace IT_Store.Repositories.Implements
 {
@@ -12,7 +13,12 @@ namespace IT_Store.Repositories.Implements
 			_db = db;
 		}
 
-		public override Category GetById(int id)
+        public IEnumerable<Category> GetAllWithParentCategory()
+        {
+            return _db.Categories.Include(c=>c.ParentCategory).ToList();
+        }
+
+        public override Category GetById(int id)
 		{
 			if (!IsExisted(id))
 				throw new Exception("Category was not found");

@@ -41,7 +41,9 @@
 								}
 							</td>
 							<td class="d-none d-md-table-cell">
-								<a href="" class="">Details</a>
+								<a class="btn text-white bg-danger" asp-action="Delete" asp-controller="Products" asp-route-id="@item.ProductId">
+									<i class="align-middle" data-feather="delete"></i> <span class="align-middle">Delete</span>
+								</a>
 							</td>
 						</tr>	
 					}

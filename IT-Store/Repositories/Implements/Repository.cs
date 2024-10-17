@@ -17,12 +17,13 @@ namespace IT_Store.Repositories.Implements
 			_db.Add(entity);
 		}
 
-		public void Delete(Model entity)
+		public virtual void Delete(int id)
 		{
+			var entity = GetById(id);
 			_db.Remove(entity);
 		}
 
-		public IEnumerable<Model> GetAll()
+		public virtual IEnumerable<Model> GetAll()
 		{
 			return _db.Set<Model>().ToList();
 		}
