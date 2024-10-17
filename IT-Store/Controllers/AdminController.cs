@@ -6,7 +6,8 @@ namespace IT_Store.Controllers
     {
         public IActionResult Dashboard()
         {
-            return View();
+            TempData["AdminTabs"] = AdminTabs.Dashboard.ToString();
+			return View();
         }
     }
 }

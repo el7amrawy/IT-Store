@@ -25,6 +25,13 @@ namespace IT_Store.Repositories.Implements
 			return _db.Categories.FirstOrDefault(c => c.CategoryId== id);
 		}
 
+		public Category GetByIdWithParentCategory(int id)
+		{
+			if (!IsExisted(id))
+				throw new Exception("Category was not found");
+			return _db.Categories.Include(c=>c.ParentCategory).FirstOrDefault(c => c.CategoryId == id);
+		}
+
 		public override bool IsExisted(int id)
 		{
 			return _db.Categories.Any(c=>c.CategoryId== id);

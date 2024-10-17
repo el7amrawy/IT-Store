@@ -16,6 +16,7 @@ namespace IT_Store.Controllers.Admin
 		[HttpGet]
 		public IActionResult Index()
 		{
+			TempData["AdminTabs"] = AdminTabs.ParentCategories.ToString();
 			return View("~/Views/Admin/ParentCategories/Index.cshtml", _repository.GetAll());
 		}
 		[HttpGet]
