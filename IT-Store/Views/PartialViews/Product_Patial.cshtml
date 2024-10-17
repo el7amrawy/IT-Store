@@ -1,0 +1,23 @@
+﻿@model Product
+
+<div class="col-md-4 col-xs-6">
+	<div class="product" style="height:392px;display:flex;align-items: center;flex-direction: column;">
+		<div class="product-img" style="width:212px;height:212px">
+			<img src="\@Model.Cover" style="object-fit: contain;height: 100%;" alt="">
+		</div>
+		<div class="product-body" style="width:100%">
+			<p class="product-category">@Model.Category.Name</p>
+			<h3 class="product-name"><a href="#">@Model.Name</a></h3>
+			<h4 class="product-price">@* $980.00 <del class="product-old-price"> *@E£@Model.Price@* </del> *@</h4>
+			<div class="product-rating">
+			</div>
+			<div class="product-btns">
+				<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+				<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+			</div>
+		</div>
+		<div class="add-to-cart">
+			<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+		</div>
+	</div>
+</div>

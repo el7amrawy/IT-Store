@@ -1,5 +1,6 @@
 ﻿using IT_Store.Models;
 using IT_Store.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace IT_Store.Repositories.Implements
 {
@@ -32,6 +33,17 @@ namespace IT_Store.Repositories.Implements
 		{
 			return _db.Products.Any(p=>p.ProductId == id);
 		}
-		
+
+		public Product GetByIdWithCategory(int id)
+		{
+			if (!IsExisted(id))
+				throw new Exception("Product is not found");
+			return _db.Products.Include(p=>p.Category).FirstOrDefault(p => p.ProductId == id);
+		}
+
+		public IEnumerable<Product> GetAllWithCategory(int pageNumber=1, int pageSize = 10)
+		{
+			return _db.Products.OrderByDescending(p => p.CreatedAt).Skip((pageNumber - 1)*pageSize).Take(pageSize).Include(p=>p.Category).ToList();
+		}
 	}
 }

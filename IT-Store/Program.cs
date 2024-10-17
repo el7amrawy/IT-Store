@@ -35,6 +35,12 @@ namespace IT_Store
                 );
 
             app.MapControllerRoute(
+                name: "home",
+                pattern:"{action}",
+                new {controller="Home"}
+            );
+
+            app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
