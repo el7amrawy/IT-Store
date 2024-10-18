@@ -20,12 +20,13 @@ namespace IT_Store.Controllers
             return View(model);
         }
         [HttpGet]
-        public IActionResult Store(int categoryId , int minPrice, int maxPrice, int brandId, int pageNumber, int pageSize)
+        public IActionResult Store(int categoryId , int minPrice, int maxPrice, int brandId, int pageNumber, int pageSize,string searchTerm)
         {
             var model = new ViewModel_StoreHome
             {
-                Products = _productRep.FilterProducts(categoryId, minPrice, maxPrice, brandId, pageNumber),
-                Count = _productRep.FilterCount(categoryId, minPrice, maxPrice, brandId),
+                //Products = _productRep.FilterProducts(categoryId, minPrice, maxPrice, brandId, pageNumber),
+                Products = _productRep.SearchAndFilter(searchTerm, categoryId, minPrice, maxPrice, brandId, pageNumber,pageSize=12),
+                Count = _productRep.SearchedAndFilteredCount(searchTerm,categoryId, minPrice, maxPrice, brandId),
                 PageSize= pageSize == 0 ? 10 : pageSize
             };
             return View(model);

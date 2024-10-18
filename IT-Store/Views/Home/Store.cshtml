@@ -204,7 +204,11 @@
 					<ul class="store-pagination">
 						@for (int i = 1; i <= Math.Ceiling((double)Model.Count/Model.PageSize); i++)
 						{
-							<li class="@(i==pageNumber?"active":"")">@i</li>
+							<li class="@(i==pageNumber?"active":"")">
+								<a asp-action="Store" asp-route-categoryid="@Context.Request.Query["categoryId"]" asp-controller="Home" asp-route-pageNumber="@i">
+									@i
+								</a>
+							</li>
 						}
 					</ul>
 				</div>
