@@ -7,16 +7,32 @@ namespace IT_Store.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index([FromServices] IProductRepository productRep)
-        {
-            var products = productRep.GetAllWithCategory(1, 5);
+        private readonly IProductRepository _productRep;
 
-			var model = new ViewModel_IndexHome(products);
+		public HomeController(IProductRepository productRep)
+		{
+			_productRep = productRep;
+		}
+        [HttpGet]
+		public IActionResult Index()
+        {
+			var model = new ViewModel_IndexHome(_productRep.GetAllWithCategory(1,7));
             return View(model);
         }
-        public IActionResult Store()
+        [HttpGet]
+        public IActionResult Store(int categoryId , int minPrice, int maxPrice, int brandId, int pageNumber, int pageSize)
         {
-            return View();
+            var model = new ViewModel_StoreHome
+            {
+                Products = _productRep.FilterProducts(categoryId, minPrice, maxPrice, brandId, pageNumber),
+                Count = _productRep.FilterCount(categoryId, minPrice, maxPrice, brandId),
+                PageSize= pageSize == 0 ? 10 : pageSize
+            };
+            return View(model);
+        }
+        [HttpGet]
+        public IActionResult Products(int id) {
+            return View(_productRep.GetByIdWithCategory(id));
         }
     }
 }

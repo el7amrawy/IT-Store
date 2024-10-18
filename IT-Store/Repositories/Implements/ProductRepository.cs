@@ -45,5 +45,44 @@ namespace IT_Store.Repositories.Implements
 		{
 			return _db.Products.OrderByDescending(p => p.CreatedAt).Skip((pageNumber - 1)*pageSize).Take(pageSize).Include(p=>p.Category).ToList();
 		}
+
+		public IEnumerable<Product> FilterProducts(int categoryId = 0, int minPrice = 0, int maxPrice = 0, int brandId = 0, int pageNumber = 1, int pageSize = 10)
+		{
+			if(pageNumber < 1)
+				pageNumber = 1;
+
+			var query = _db.Products.AsQueryable();
+			if ( categoryId !=0)
+				query=query.Where(p => p.CategoryId == categoryId);
+
+			if ( minPrice != 0 )
+				query=query.Where(p => p.Price >= minPrice);
+
+			if( maxPrice !=0 )
+				query=query.Where(p=>p.Price <= maxPrice);
+
+			if( brandId != 0 )
+				query=query.Where(p=>brandId==p.BrandId);
+
+			return query.Where(x=>!x.Isdeleted).OrderByDescending(p=>p.CreatedAt).Skip((pageNumber - 1) * pageSize).Take(pageSize).Include(p=>p.Category).ToList();
+		}
+
+		public int FilterCount(int categoryId = 0, int minPrice = 0, int maxPrice = 0, int brandId = 0)
+		{
+			var query = _db.Products.AsQueryable();
+			if (categoryId != 0)
+				query = query.Where(p => p.CategoryId == categoryId);
+
+			if (minPrice != 0)
+				query = query.Where(p => p.Price >= minPrice);
+
+			if (maxPrice != 0)
+				query = query.Where(p => p.Price <= maxPrice);
+
+			if (brandId != 0)
+				query = query.Where(p => brandId == p.BrandId);
+
+			return query.Count();
+		}
 	}
 }
