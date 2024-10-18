@@ -36,7 +36,7 @@ namespace IT_Store.Controllers
 						new AuthenticationProperties { IsPersistent = model.RememberMe, ExpiresUtc = DateTime.Now.AddDays(1) }
 					);
 
-					return RedirectToAction("Index", "Home");
+					return RedirectToAction("", "Home");
 				}
 				else
 				{
@@ -47,6 +47,50 @@ namespace IT_Store.Controllers
                 }
 			}
             return View();
+		}
+		[HttpGet]
+		public IActionResult LogIn()
+		{
+			return View();
+		}
+		[HttpPost]
+		public async Task< IActionResult> LogIn(ViewModel_LogInAccount model)
+		{
+			if (ModelState.IsValid) {
+				try
+				{
+					var user =await _userManager.FindByEmailAsync(model.Email);
+					if (user == null)
+					{
+						throw new Exception();
+					}
+					else
+					{
+						if (await _userManager.CheckPasswordAsync(user,model.Password))
+						{
+							await _userManager.AddToRoleAsync(user, "User");
+							await _signInManager.SignInAsync(
+								user,
+								new AuthenticationProperties { IsPersistent = model.RememberMe, ExpiresUtc = DateTime.Now.AddDays(1) }
+							);
+							return RedirectToAction("", "Home");
+						}
+						throw new Exception();
+					}
+				}
+				catch (Exception)
+				{
+					ModelState.AddModelError("Password", "Wrong email or password");
+					return View(model);
+				}
+				
+			}
+			return View(model);
+		}
+		public async Task<IActionResult> LogOut()
+		{
+			await _signInManager.SignOutAsync();
+			return RedirectToAction("", "Home");
 		}
 	}
 }

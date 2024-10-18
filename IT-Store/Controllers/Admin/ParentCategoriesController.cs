@@ -1,10 +1,12 @@
 ﻿using IT_Store.Repositories.Interfaces;
 using IT_Store.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IT_Store.Controllers.Admin
 {
 	[Route("Admin/{controller}/{action=Index}")]
+	[Authorize(Roles = "Admin")]
 	public class ParentCategoriesController : Controller
 	{
 		private readonly IParentCategoryRepository _repository;

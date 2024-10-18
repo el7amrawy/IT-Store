@@ -1,11 +1,13 @@
 ﻿using IT_Store.Repositories.Interfaces;
 using IT_Store.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace IT_Store.Controllers.Admin
 {
 	[Route("Admin/{controller}/{action=Index}/{id?}")]
+	[Authorize(Roles = "Admin")]
 	public class ProductsController : Controller
 	{
 		private readonly IProductRepository _repository;

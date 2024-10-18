@@ -26,6 +26,8 @@ namespace IT_Store
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.MapControllerRoute(
