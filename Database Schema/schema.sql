@@ -112,7 +112,9 @@ created_at datetime not null
 go*/
 
 create table carts(
-cartID int primary key references AspNetUsers(id) on delete cascade,
+--cartID int primary key references AspNetUsers(id) on delete cascade,
+cartID int primary key identity,
+userID int foreign key references  AspNetUsers(id) on delete cascade,
 total int not null,
 created_at datetime not null,
 updated_at datetime not null
@@ -129,16 +131,16 @@ primary key clustered (cartID,productID)
 )
 go
 
-create TRIGGER tr_createCart
-on [AspNetUsers]
-AFTER insert
-as
-begin
-	declare @id int= (select top 1 id from inserted)
-	declare @currentDate datetime=GETDATE()
-	insert into [carts] values (@id,0,@currentDate , @currentDate)
-end
-go
+--create TRIGGER tr_createCart
+--on [AspNetUsers]
+--AFTER insert
+--as
+--begin
+--	declare @id int= (select top 1 id from inserted)
+--	declare @currentDate datetime=GETDATE()
+--	insert into [carts] values (@id,0,@currentDate , @currentDate)
+--end
+--go
 
 create table orders(
 orderID int primary key identity,
