@@ -203,7 +203,7 @@ namespace IT_Store.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
+        }
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
