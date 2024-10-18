@@ -122,7 +122,7 @@ updated_at datetime not null
 go
 
 create table cart_items(
-cartID int foreign key references carts(cartID),
+cartID int foreign key references carts(cartID) on delete cascade,
 productID int foreign key references products(productID),
 quantity int not null,
 created_at datetime not null,
