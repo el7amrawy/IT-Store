@@ -11,12 +11,16 @@ namespace IT_Store.Repositories.Implements
 		{
 			_db = db;
 		}
-
 		public override Cart GetById(int id)
 		{
 			if (!IsExisted(id))
 				throw new Exception("Cart is not found");
 			return _db.Carts.FirstOrDefault(c => c.CartId == id);
+		}
+
+		public Cart GetCartByUserId(int userId)
+		{
+			return _db.Carts.FirstOrDefault(c => c.UserId == userId);
 		}
 
 		public override bool IsExisted(int id)

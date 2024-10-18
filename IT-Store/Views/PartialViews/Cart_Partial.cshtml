@@ -1,0 +1,50 @@
+﻿@model Cart
+@inject ICartItemRepository _cartItemRep
+@{
+	int total = 0;
+
+	List<CartItem> cartItems = null;
+	if (Model != null)
+		cartItems = _cartItemRep.GetItemsByCartId(Model.CartId);
+}
+<!-- Cart -->
+<div class="dropdown">
+	<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+		<i class="fa fa-shopping-cart"></i>
+		<span>Your Cart</span>
+		<div class="qty">@(cartItems?.Count??0)</div>
+	</a>
+	<div class="cart-dropdown">
+		@if (Model != null)
+		{
+			@foreach (var item in cartItems)
+			{
+				<div class="cart-list">
+					<div class="product-widget">
+						<div class="product-img">
+							<img src="/@item.Product.Cover" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-name"><a href="#">@Html.DisplayFor(i=>item.Product.Name)</a></h3>
+							<h4 class="product-price"><span class="qty">1x</span>E£@Html.DisplayFor(i => item.Product.Price)</h4>
+						</div>
+						<button class="delete"><i class="fa fa-close"></i></button>
+					</div>
+				</div>
+				@(total+=item.Product.Price*item.Quantity)
+			}
+
+			@if (cartItems?.Count>0)
+			{
+				<div class="cart-summary">
+					<small>@cartItems.Count Item(s) selected</small>
+					<h5>SUBTOTAL: E£@total</h5>
+				</div>
+			}
+		}
+		<div class="cart-btns" style="display: flex;justify-content: center;">
+			<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+		</div>
+	</div>
+</div>
+<!-- /Cart -->
