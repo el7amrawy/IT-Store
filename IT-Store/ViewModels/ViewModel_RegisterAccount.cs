@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using IT_Store.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IT_Store.ViewModels
 {
@@ -20,5 +22,11 @@ namespace IT_Store.ViewModels
 		public string Password { get; set; }
 		[Display(Name ="Remember Me")]
 		public bool RememberMe { get; set; }
+		[NotMapped]
+		public User User { 
+			get {
+				return new User { FirstName = FirstName, LastName = LastName, Email = Email, UserName = Username };
+			}
+		}
 	}
 }
