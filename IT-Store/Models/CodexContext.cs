@@ -94,15 +94,13 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
                 .HasColumnName("name");
         });
 
-        modelBuilder.Entity<Cart>(entity =>
+		modelBuilder.Entity<Cart>(entity =>
 		{
-			entity.HasKey(e => e.CartId).HasName("PK__carts__415B03D8321E2C21");
+			entity.HasKey(e => e.CartId).HasName("PK__carts__415B03D81E38133F");
 
 			entity.ToTable("carts");
 
-			entity.Property(e => e.CartId)
-				.ValueGeneratedNever()
-				.HasColumnName("cartID");
+			entity.Property(e => e.CartId).HasColumnName("cartID");
 			entity.Property(e => e.CreatedAt)
 				.HasColumnType("datetime")
 				.HasColumnName("created_at");
@@ -110,15 +108,17 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 			entity.Property(e => e.UpdatedAt)
 				.HasColumnType("datetime")
 				.HasColumnName("updated_at");
+			entity.Property(e => e.UserId).HasColumnName("userID");
 
-			entity.HasOne(d => d.CartNavigation).WithOne(p => p.Cart)
-				.HasForeignKey<Cart>(d => d.CartId)
-				.HasConstraintName("FK__carts__cartID__71D1E811");
+			entity.HasOne(d => d.User).WithMany(p => p.Carts)
+				.HasForeignKey(d => d.UserId)
+				.OnDelete(DeleteBehavior.Cascade)
+				.HasConstraintName("FK__carts__userID__08B54D69");
 		});
 
 		modelBuilder.Entity<CartItem>(entity =>
 		{
-			entity.HasKey(e => new { e.CartId, e.ProductId }).HasName("PK__cart_ite__F38A0ECC8F5AA0A6");
+			entity.HasKey(e => new { e.CartId, e.ProductId }).HasName("PK__cart_ite__F38A0ECCDBE63011");
 
 			entity.ToTable("cart_items");
 
@@ -134,13 +134,12 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 
 			entity.HasOne(d => d.Cart).WithMany(p => p.CartItems)
 				.HasForeignKey(d => d.CartId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__cart_item__cartI__74AE54BC");
+				.HasConstraintName("FK__cart_item__cartI__0F624AF8");
 
 			entity.HasOne(d => d.Product).WithMany(p => p.CartItems)
 				.HasForeignKey(d => d.ProductId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__cart_item__produ__75A278F5");
+				.OnDelete(DeleteBehavior.Cascade)
+				.HasConstraintName("FK__cart_item__produ__10566F31");
 		});
 
 		modelBuilder.Entity<Category>(entity =>

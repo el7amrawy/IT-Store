@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IT_Store.Migrations
 {
     [DbContext(typeof(CodexContext))]
-    [Migration("20241015150415_AddIdentityTables")]
-    partial class AddIdentityTables
+    [Migration("20241018130348_IdentityTables")]
+    partial class IdentityTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,7 +78,7 @@ namespace IT_Store.Migrations
                         .HasColumnName("phone_number");
 
                     b.HasKey("AddressId")
-                        .HasName("PK__addresse__26A1118DA41FBA50");
+                        .HasName("PK__addresse__26A1118DFBC27F27");
 
                     b.HasIndex("Id");
 
@@ -118,7 +118,10 @@ namespace IT_Store.Migrations
                         .HasColumnName("name");
 
                     b.HasKey("BrandId")
-                        .HasName("PK__brands__06B772B933ACA717");
+                        .HasName("PK__brands__06B772B9402C7536");
+
+                    b.HasIndex(new[] { "Name" }, "UQ__brands__72E12F1B9E9BC4D7")
+                        .IsUnique();
 
                     b.ToTable("brands", (string)null);
                 });
@@ -126,8 +129,11 @@ namespace IT_Store.Migrations
             modelBuilder.Entity("IT_Store.Models.Cart", b =>
                 {
                     b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("cartID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime")
@@ -141,8 +147,14 @@ namespace IT_Store.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("updated_at");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("userID");
+
                     b.HasKey("CartId")
-                        .HasName("PK__carts__415B03D83A57122C");
+                        .HasName("PK__carts__415B03D81E38133F");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("carts", (string)null);
                 });
@@ -170,7 +182,7 @@ namespace IT_Store.Migrations
                         .HasColumnName("updated_at");
 
                     b.HasKey("CartId", "ProductId")
-                        .HasName("PK__cart_ite__F38A0ECC1EB58A85");
+                        .HasName("PK__cart_ite__F38A0ECCDBE63011");
 
                     b.HasIndex("ProductId");
 
@@ -210,7 +222,7 @@ namespace IT_Store.Migrations
                         .HasColumnName("parentCategory_id");
 
                     b.HasKey("CategoryId")
-                        .HasName("PK__categori__23CAF1F8D589513C");
+                        .HasName("PK__categori__23CAF1F80AC7B635");
 
                     b.HasIndex("ParentCategoryId");
 
@@ -243,7 +255,7 @@ namespace IT_Store.Migrations
                         .HasColumnName("updated_at");
 
                     b.HasKey("OrderId")
-                        .HasName("PK__orders__0809337D774FF456");
+                        .HasName("PK__orders__0809337D2DDA26AE");
 
                     b.HasIndex("Id");
 
@@ -308,7 +320,7 @@ namespace IT_Store.Migrations
                         .HasColumnName("name");
 
                     b.HasKey("CategoryId")
-                        .HasName("PK__parentCa__23CAF1F84AA5A501");
+                        .HasName("PK__parentCa__23CAF1F80D3FF314");
 
                     b.ToTable("parentCategories", (string)null);
                 });
@@ -351,7 +363,7 @@ namespace IT_Store.Migrations
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("PK__payment___3214EC27F756A421");
+                        .HasName("PK__payment___3214EC277778217F");
 
                     b.HasIndex("OrderId");
 
@@ -366,10 +378,6 @@ namespace IT_Store.Migrations
                         .HasColumnName("productID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
-
-                    b.Property<int>("BasePrice")
-                        .HasColumnType("int")
-                        .HasColumnName("basePrice");
 
                     b.Property<int?>("BrandId")
                         .HasColumnType("int")
@@ -402,6 +410,10 @@ namespace IT_Store.Migrations
                         .HasColumnType("int")
                         .HasColumnName("discount");
 
+                    b.Property<bool>("Instock")
+                        .HasColumnType("bit")
+                        .HasColumnName("instock");
+
                     b.Property<bool>("Isdeleted")
                         .HasColumnType("bit")
                         .HasColumnName("isdeleted");
@@ -411,6 +423,14 @@ namespace IT_Store.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("name");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int")
+                        .HasColumnName("price");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int")
+                        .HasColumnName("quantity");
 
                     b.Property<string>("SerialNumber")
                         .IsRequired()
@@ -425,7 +445,7 @@ namespace IT_Store.Migrations
                         .HasColumnName("summary");
 
                     b.HasKey("ProductId")
-                        .HasName("PK__products__2D10D14A80A60E65");
+                        .HasName("PK__products__2D10D14A583B59AD");
 
                     b.HasIndex("BrandId");
 
@@ -439,10 +459,6 @@ namespace IT_Store.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int")
                         .HasColumnName("ID");
-
-                    b.Property<int>("AddOnPrice")
-                        .HasColumnType("int")
-                        .HasColumnName("addOnPrice");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime")
@@ -463,7 +479,7 @@ namespace IT_Store.Migrations
                         .HasColumnName("value");
 
                     b.HasKey("Id")
-                        .HasName("PK__product___3214EC279BC3F960");
+                        .HasName("PK__product___3214EC27CAF88387");
 
                     b.ToTable("product_attributes", (string)null);
                 });
@@ -700,7 +716,7 @@ namespace IT_Store.Migrations
                         .HasColumnName("Product_attributes_ID");
 
                     b.HasKey("ProductId", "ProductAttributesId")
-                        .HasName("PK__products__D2840D89B1E2C1F3");
+                        .HasName("PK__products__D2840D89C5393243");
 
                     b.HasIndex("ProductAttributesId");
 
@@ -712,21 +728,20 @@ namespace IT_Store.Migrations
                     b.HasOne("IT_Store.Models.User", "IdNavigation")
                         .WithMany("Addresses")
                         .HasForeignKey("Id")
-                        .HasConstraintName("FK__addresses__id__3B75D760");
+                        .HasConstraintName("FK__addresses__id__5EBF139D");
 
                     b.Navigation("IdNavigation");
                 });
 
             modelBuilder.Entity("IT_Store.Models.Cart", b =>
                 {
-                    b.HasOne("IT_Store.Models.User", "CartNavigation")
-                        .WithOne("Cart")
-                        .HasForeignKey("IT_Store.Models.Cart", "CartId")
+                    b.HasOne("IT_Store.Models.User", "User")
+                        .WithMany("Carts")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK__carts__cartID__4E88ABD4");
+                        .HasConstraintName("FK__carts__userID__08B54D69");
 
-                    b.Navigation("CartNavigation");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("IT_Store.Models.CartItem", b =>
@@ -734,14 +749,16 @@ namespace IT_Store.Migrations
                     b.HasOne("IT_Store.Models.Cart", "Cart")
                         .WithMany("CartItems")
                         .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK__cart_item__cartI__5165187F");
+                        .HasConstraintName("FK__cart_item__cartI__0F624AF8");
 
                     b.HasOne("IT_Store.Models.Product", "Product")
                         .WithMany("CartItems")
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK__cart_item__produ__52593CB8");
+                        .HasConstraintName("FK__cart_item__produ__10566F31");
 
                     b.Navigation("Cart");
 
@@ -753,7 +770,7 @@ namespace IT_Store.Migrations
                     b.HasOne("IT_Store.Models.ParentCategory", "ParentCategory")
                         .WithMany("Categories")
                         .HasForeignKey("ParentCategoryId")
-                        .HasConstraintName("FK__categorie__paren__403A8C7D");
+                        .HasConstraintName("FK__categorie__paren__6383C8BA");
 
                     b.Navigation("ParentCategory");
                 });
@@ -763,7 +780,7 @@ namespace IT_Store.Migrations
                     b.HasOne("IT_Store.Models.User", "IdNavigation")
                         .WithMany("Orders")
                         .HasForeignKey("Id")
-                        .HasConstraintName("FK__orders__id__5629CD9C");
+                        .HasConstraintName("FK__orders__id__797309D9");
 
                     b.Navigation("IdNavigation");
                 });
@@ -773,12 +790,12 @@ namespace IT_Store.Migrations
                     b.HasOne("IT_Store.Models.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId")
-                        .HasConstraintName("FK__order_ite__order__5812160E");
+                        .HasConstraintName("FK__order_ite__order__7B5B524B");
 
                     b.HasOne("IT_Store.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .HasConstraintName("FK__order_ite__produ__59063A47");
+                        .HasConstraintName("FK__order_ite__produ__7C4F7684");
 
                     b.Navigation("Order");
 
@@ -790,7 +807,7 @@ namespace IT_Store.Migrations
                     b.HasOne("IT_Store.Models.Order", "Order")
                         .WithMany("PaymentDetails")
                         .HasForeignKey("OrderId")
-                        .HasConstraintName("FK__payment_d__order__5BE2A6F2");
+                        .HasConstraintName("FK__payment_d__order__7F2BE32F");
 
                     b.Navigation("Order");
                 });
@@ -800,12 +817,12 @@ namespace IT_Store.Migrations
                     b.HasOne("IT_Store.Models.Brand", "Brand")
                         .WithMany("Products")
                         .HasForeignKey("BrandId")
-                        .HasConstraintName("FK__products__brandI__45F365D3");
+                        .HasConstraintName("FK__products__brandI__693CA210");
 
                     b.HasOne("IT_Store.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .HasConstraintName("FK__products__catego__44FF419A");
+                        .HasConstraintName("FK__products__catego__68487DD7");
 
                     b.Navigation("Brand");
 
@@ -869,13 +886,13 @@ namespace IT_Store.Migrations
                         .WithMany()
                         .HasForeignKey("ProductAttributesId")
                         .IsRequired()
-                        .HasConstraintName("FK__productsP__Produ__4BAC3F29");
+                        .HasConstraintName("FK__productsP__Produ__6EF57B66");
 
                     b.HasOne("IT_Store.Models.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .IsRequired()
-                        .HasConstraintName("FK__productsP__produ__4AB81AF0");
+                        .HasConstraintName("FK__productsP__produ__6E01572D");
                 });
 
             modelBuilder.Entity("IT_Store.Models.Brand", b =>
@@ -912,7 +929,7 @@ namespace IT_Store.Migrations
                 {
                     b.Navigation("Addresses");
 
-                    b.Navigation("Cart");
+                    b.Navigation("Carts");
 
                     b.Navigation("Orders");
                 });

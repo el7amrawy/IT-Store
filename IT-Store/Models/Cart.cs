@@ -4,6 +4,8 @@ public partial class Cart
 {
     public int CartId { get; set; }
 
+    public int? UserId { get; set; }
+
     public int Total { get; set; }
 
     public DateTime CreatedAt { get; set; }
@@ -12,5 +14,5 @@ public partial class Cart
 
     public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 
-    public virtual User CartNavigation { get; set; } = null!;
+    public virtual User? User { get; set; }
 }
