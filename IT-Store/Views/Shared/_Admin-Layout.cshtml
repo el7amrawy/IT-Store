@@ -32,9 +32,9 @@
 				</a>
 
 				<ul class="sidebar-nav">
-					@* <li class="sidebar-header">
-						Pages
-					</li> *@
+					<li class="sidebar-header">
+						Store
+					</li>
 
 					<li class="sidebar-item @(tab==AdminTabs.Dashboard?"active":"")" >
 						<a class="sidebar-link" asp-action="dashboard" asp-controller="admin">
@@ -62,6 +62,14 @@
 					<li class="sidebar-item @(tab==AdminTabs.ParentCategories?"active":"")">
 						<a class="sidebar-link" asp-action="index" asp-controller="ParentCategories">
 							<i class="align-middle" data-feather="grid"></i> <span class="align-middle">Parent Categories</span>
+						</a>
+					</li>
+					<li class="sidebar-header">
+						Admins
+					</li>
+					<li class="sidebar-item @(tab==AdminTabs.Roles?"active":"")">
+						<a class="sidebar-link" asp-action="Roles" asp-controller="Admin">
+							<i class="align-middle" data-feather="shield"></i> <span class="align-middle">Roles</span>
 						</a>
 					</li>
 				</ul>

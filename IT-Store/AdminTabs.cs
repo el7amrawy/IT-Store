@@ -6,6 +6,7 @@
 		Products,
 		Brands,
 		Categories,
-		ParentCategories
+		ParentCategories,
+		Roles
 	}
 }
