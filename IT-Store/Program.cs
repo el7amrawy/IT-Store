@@ -12,8 +12,8 @@ namespace IT_Store
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            AddServices(builder.Services);
+			// Add services to the container.
+			ConfigureServices(builder.Services);
 
             var app = builder.Build();
 
@@ -48,7 +48,7 @@ namespace IT_Store
 
             app.Run();
         }
-        private static void AddServices(IServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
@@ -61,6 +61,7 @@ namespace IT_Store
             services.AddScoped<IBrandRepository, BrandRepository>();
 			services.AddScoped<ICategoryRepository, CategoryRepository>();
 			services.AddScoped<IParentCategoryRepository, ParentCategoryRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
 
 			services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<CodexContext>();
         }

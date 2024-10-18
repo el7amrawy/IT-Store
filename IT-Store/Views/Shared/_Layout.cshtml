@@ -52,6 +52,8 @@
 					@if (User.Identity.IsAuthenticated)
 					{
 						<li><a asp-controller="Account" asp-action="LogOut"><i class="fa fa-sign-out"></i>Log Out</a></li>
+					}else{
+						<li><a asp-controller="Account" asp-action="LogIn"><i class="fa fa-sign-in"></i>Log In</a></li>
 					}
 				</ul>
 			</div>

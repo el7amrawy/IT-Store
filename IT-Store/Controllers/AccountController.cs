@@ -1,4 +1,5 @@
 ﻿using IT_Store.Models;
+using IT_Store.Repositories.Interfaces;
 using IT_Store.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -22,7 +23,7 @@ namespace IT_Store.Controllers
 			return View();
 		}
 		[HttpPost]
-		public async Task<IActionResult> Register(ViewModel_RegisterAccount model)
+		public async Task<IActionResult> Register(ViewModel_RegisterAccount model,[FromServices]ICartRepository cartRep)
 		{
 			if (ModelState.IsValid)
 			{
@@ -35,6 +36,14 @@ namespace IT_Store.Controllers
 						user,
 						new AuthenticationProperties { IsPersistent = model.RememberMe, ExpiresUtc = DateTime.Now.AddDays(1) }
 					);
+
+					var createdUser=await _userManager.FindByEmailAsync(user.Email);
+					if (createdUser != null)
+					{
+						var datetime = DateTime.Now;
+						cartRep.Add(new Cart { Total = 0, CreatedAt = datetime, UserId = createdUser.Id, UpdatedAt= datetime });
+						cartRep.Save();
+					}
 
 					return RedirectToAction("", "Home");
 				}

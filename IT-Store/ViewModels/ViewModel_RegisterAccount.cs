@@ -25,7 +25,7 @@ namespace IT_Store.ViewModels
 		[NotMapped]
 		public User User { 
 			get {
-				return new User { FirstName = FirstName, LastName = LastName, Email = Email, UserName = Username };
+				return new User { FirstName = FirstName, LastName = LastName, Email = Email, UserName = Username,CreatedAt=DateTime.Now };
 			}
 		}
 	}
