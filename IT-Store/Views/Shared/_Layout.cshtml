@@ -57,7 +57,7 @@
 				</ul>
 				<ul class="header-links pull-right">
 					<li><a href="#"><i class="fa">E£</i>EGP</a></li>
-					<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+					<li><a asp-controller="Account" asp-action="Index"><i class="fa fa-user-o"></i> My Account</a></li>
 					@if (User.Identity.IsAuthenticated)
 					{
 						<li><a asp-controller="Account" asp-action="LogOut"><i class="fa fa-sign-out"></i>Log Out</a></li>

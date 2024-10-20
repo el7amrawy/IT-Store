@@ -1,0 +1,66 @@
+﻿@model ViewModel_IndexAccount
+@{
+	ViewBag.Title = "User Profile";
+}
+
+<div class="container bootstrap snippet">
+    <div class="row" style="margin-top:40px">
+        <div class="col-sm-10"><h1>@Model.FirstName @Model.LastName</h1></div>
+        <div class="col-sm-2"><a href="/users" class="pull-right"></a></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="text-center">
+                <img src="@(Model.Avatar??"http://ssl.gstatic.com/accounts/ui/avatar_2x.png")" class="avatar img-circle img-thumbnail" alt="avatar">
+                <h6>Upload a different photo...</h6>
+                <input type="file" class="text-center center-block file-upload">
+            </div>
+            <br>
+        </div><!--/col-3-->
+        <div class="col-sm-9">
+
+                <div class="tab-pane" id="settings">
+                    <form class="form" asp-action="UpdateUser">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                        <input asp-for="Id" hidden />
+                        <div class="form-group">
+                            <div class="col-xs-6" style="margin-bottom: 15px;">
+                                <label asp-for="FirstName"><h4>@Html.DisplayNameFor(m=>m.FirstName)</h4</label>
+                                <input asp-for="FirstName" class="form-control" title="enter your first name if any.">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6" style="margin-bottom: 15px;">
+                                <label asp-for="LastName"><h4>@Html.DisplayNameFor(m=>m.LastName)</h4</label>
+                                <input asp-for="LastName" class="form-control" title="enter your last name if any.">
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6" style="margin-bottom: 15px;">
+                                <label asp-for="Email"><h4>@Html.DisplayNameFor(m=>m.Email)</h4</label>
+                                <input asp-for="Email" class="form-control" title="enter your last email if any.">
+                        </div>
+
+                        <div class="col-xs-6" style="margin-bottom: 15px;">
+                                <label asp-for="UserName"><h4>@Html.DisplayNameFor(m=>m.UserName)</h4</label>
+                                <input asp-for="UserName" class="form-control" title="enter your username if any.">
+                        </div>
+                        <div class="col-xs-6" style="margin-bottom: 15px;">
+                                <label asp-for="PhoneNumber"><h4>@Html.DisplayNameFor(m=>m.PhoneNumber)</h4</label>
+                                <input asp-for="PhoneNumber" class="form-control" title="enter your phone number if any.">
+                        </div>
+                        <div class="form-group" >
+                        <div class="col-xs-12" style="margin-bottom:20px">
+                                <br>
+                            <button class="btn btn-lg btn-success pull-right" type="submit">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div><!--/tab-pane-->
+        </div><!--/tab-content-->
+
+    </div><!--/col-9-->
+</div><!--/row-->

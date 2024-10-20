@@ -2,8 +2,10 @@
 using IT_Store.Repositories.Interfaces;
 using IT_Store.ViewModels;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace IT_Store.Controllers
 {
@@ -95,10 +97,52 @@ namespace IT_Store.Controllers
 			}
 			return View(model);
 		}
+		[Authorize(Roles ="User")]
 		public async Task<IActionResult> LogOut()
 		{
 			await _signInManager.SignOutAsync();
 			return RedirectToAction("", "Home");
 		}
-	}
+		[Authorize(Roles ="User")]
+		[HttpGet]
+		public async Task<IActionResult> Index()
+		{
+			int userId=this.GetUserId();
+			User user =await _userManager.FindByIdAsync(userId.ToString());
+            ViewModel_IndexAccount model = new ViewModel_IndexAccount(user);
+			return View(model);
+		}
+        [Authorize(Roles = "User")]
+		[HttpPost]
+        public async Task<IActionResult> UpdateUser(ViewModel_IndexAccount model)
+		{
+			if (ModelState.IsValid)
+			{
+                var user = await _userManager.FindByIdAsync(model.Id.ToString());
+                if (user == null || model.Id != user.Id)
+                {
+                    ModelState.AddModelError("", "Can't modify this user");
+                    return View("Index", model);
+                }
+
+                user.PhoneNumber = model.PhoneNumber;
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+
+                var result = await _userManager.UpdateAsync(user);
+                if (!result.Succeeded)
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                    return View("Index", model);
+                }
+                return RedirectToAction("Index");
+            }
+			return View("Index",model);
+        }
+    }
 }

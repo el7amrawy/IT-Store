@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using IT_Store.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace IT_Store
 {
@@ -14,5 +16,14 @@ namespace IT_Store
 			}
 			return controller.RedirectToAction("", "Home");
 		}
+		[NonAction]
+		public static int GetUserId(this Controller controller) {
+			if (controller.User.Identity.IsAuthenticated)
+			{
+				var userIdClaim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+				return int.Parse(userIdClaim.Value);
+			}
+			return 0;
+        }
 	}
 }
