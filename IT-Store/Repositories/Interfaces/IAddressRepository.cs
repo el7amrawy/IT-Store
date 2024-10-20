@@ -4,5 +4,6 @@ namespace IT_Store.Repositories.Interfaces
 {
     public interface IAddressRepository:IRepository<Address>
     {
+        public IEnumerable<Address> GetByUserId(int userId);
     }
 }

@@ -61,6 +61,12 @@
 
             </div><!--/tab-pane-->
         </div><!--/tab-content-->
-
+        <hr />
+    <h4>Settings</h4>
+    <a asp-controller="Addresses" asp-action="Index" style="margin-bottom:20px;display:block;font-size:18px">Addresses</a>
     </div><!--/col-9-->
-</div><!--/row-->
+    @section Scripts{
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

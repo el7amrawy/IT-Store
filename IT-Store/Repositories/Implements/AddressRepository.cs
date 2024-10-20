@@ -17,12 +17,17 @@ namespace IT_Store.Repositories.Implements
             if (!IsExisted(id)) {
                 throw new Exception("Address does not exist");
             }
-            return _db.Addresses.FirstOrDefault(a => a.Id == id);
+            return _db.Addresses.FirstOrDefault(a => a.AddressId == id);
         }
 
-        public override bool IsExisted(int id)
+		public IEnumerable<Address> GetByUserId(int userId)
+		{
+			return _db.Addresses.Where(a => a.UserId == userId).ToList();
+		}
+
+		public override bool IsExisted(int id)
         {
-            throw new NotImplementedException();
+            return _db.Addresses.Any(a => a.AddressId == id);
         }
     }
 }

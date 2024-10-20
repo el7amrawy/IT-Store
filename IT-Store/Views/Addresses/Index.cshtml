@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Address>
+@{
+	ViewBag.Title = "User Addresses";
+}
+
+
+<div class="" style="display: flex;flex-direction: column;align-items: center; margin:40px 0;">
+ <a asp-action="Add" asp-controller="Addresses" class=" m-3 btn bg-primary text-white">Add new address</a>
+ 	<div class="col-12 col-lg-8 col-xxl-12 d-flex">
+ 		<div class="card flex-fill">
+ 			<div class="card-header">
+
+ 				<h5 class="card-title mb-0">Your Addresses</h5>
+ 			</div>
+ 			<table class="table table-hover my-0">
+ 				<thead>
+ 					<tr>
+ 						<th>@Html.DisplayNameFor(model => model.AddressId)</th>
+ 						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.AddressLine)</th>
+ 						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.PhoneNumber)</th>
+ 						<th class="d-none d-md-table-cell"></th>
+ 					</tr>
+ 				</thead>
+ 				<tbody>
+ 					@foreach (var item in Model)
+ 					{
+ 						<tr>
+ 							<td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.AddressId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AddressLine)</td>
+                            <td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+ 							<td class="d-none d-xl-table-cell">
+                                <a asp-action="Edit" asp-route-id="@item.AddressId" asp-controller="Addresses" class="btn text-white bg-secondary">
+ 									<i class="align-middle" data-feather="edit"></i> <span class="align-middle">Edit</span>
+ 								</a>
+                                <a asp-action="Delete" asp-controller="Addresses" asp-route-id="@item.AddressId" class="btn text-white bg-danger">
+ 									<i class="align-middle" data-feather="delete"></i> <span class="align-middle">Delete</span>
+ 								</a>
+
+ 							</td>
+ 						</tr>
+ 					}
+ 				</tbody>
+ 			</table>
+ 		</div>
+ 	</div>
+</div>

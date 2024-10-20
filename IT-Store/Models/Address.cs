@@ -1,19 +1,22 @@
-﻿namespace IT_Store.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace IT_Store.Models;
 
 public partial class Address
 {
+	[Display(Name ="Id")]
 	public int AddressId { get; set; }
 
 	public int? UserId { get; set; }
-
-	public string AddressLine { get; set; } = null!;
+    [Display(Name = "Address Line")]
+    public string AddressLine { get; set; } = null!;
 
 	public string City { get; set; } = null!;
 
 	public string Country { get; set; } = null!;
 
 	public string? Landmark { get; set; }
-
+	[Display(Name ="Phone Number")]
 	public string PhoneNumber { get; set; } = null!;
 
 	public DateTime CreatedAt { get; set; }
