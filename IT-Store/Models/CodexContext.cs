@@ -37,17 +37,14 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 	{
 		modelBuilder.Entity<Address>(entity =>
 		{
-			entity.HasKey(e => e.AddressId).HasName("PK__addresse__26A1118DFBC27F27");
+			entity.HasKey(e => e.AddressId).HasName("PK__addresse__26A1118D37E8B6BE");
 
 			entity.ToTable("addresses");
 
 			entity.Property(e => e.AddressId).HasColumnName("addressID");
-			entity.Property(e => e.AddressLine1)
+			entity.Property(e => e.AddressLine)
 				.HasMaxLength(150)
-				.HasColumnName("address_line_1");
-			entity.Property(e => e.AddressLine2)
-				.HasMaxLength(150)
-				.HasColumnName("address_line_2");
+				.HasColumnName("address_line");
 			entity.Property(e => e.City)
 				.HasMaxLength(50)
 				.HasColumnName("city");
@@ -57,7 +54,6 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 			entity.Property(e => e.CreatedAt)
 				.HasColumnType("datetime")
 				.HasColumnName("created_at");
-			entity.Property(e => e.Id).HasColumnName("id");
 			entity.Property(e => e.Landmark)
 				.HasMaxLength(100)
 				.HasColumnName("landmark");
@@ -65,12 +61,13 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 				.HasMaxLength(20)
 				.IsUnicode(false)
 				.HasColumnName("phone_number");
+			entity.Property(e => e.UserId).HasColumnName("userId");
 
-			entity.HasOne(d => d.IdNavigation).WithMany(p => p.Addresses)
-				.HasForeignKey(d => d.Id)
-				.HasConstraintName("FK__addresses__id__5EBF139D");
+			entity.HasOne(d => d.User).WithMany(p => p.Addresses)
+				.HasForeignKey(d => d.UserId)
+				.HasConstraintName("FK__addresses__userI__1F98B2C1");
 		});
-        modelBuilder.Entity<Brand>(entity =>
+		modelBuilder.Entity<Brand>(entity =>
         {
             entity.HasKey(e => e.BrandId).HasName("PK__brands__06B772B9402C7536");
 
@@ -168,23 +165,29 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 
 		modelBuilder.Entity<Order>(entity =>
 		{
-			entity.HasKey(e => e.OrderId).HasName("PK__orders__0809337D2DDA26AE");
+			entity.HasKey(e => e.OrderId).HasName("PK__orders__0809337D1C403214");
 
 			entity.ToTable("orders");
 
 			entity.Property(e => e.OrderId).HasColumnName("orderID");
+			entity.Property(e => e.AddressId).HasColumnName("addressID");
 			entity.Property(e => e.CreatedAt)
 				.HasColumnType("datetime")
 				.HasColumnName("created_at");
-			entity.Property(e => e.Id).HasColumnName("id");
 			entity.Property(e => e.Total).HasColumnName("total");
 			entity.Property(e => e.UpdatedAt)
 				.HasColumnType("datetime")
 				.HasColumnName("updated_at");
+			entity.Property(e => e.UserId).HasColumnName("userId");
 
-			entity.HasOne(d => d.IdNavigation).WithMany(p => p.Orders)
-				.HasForeignKey(d => d.Id)
-				.HasConstraintName("FK__orders__id__797309D9");
+			entity.HasOne(d => d.Address).WithMany(p => p.Orders)
+				.HasForeignKey(d => d.AddressId)
+				.OnDelete(DeleteBehavior.ClientSetNull)
+				.HasConstraintName("FK__orders__addressI__236943A5");
+
+			entity.HasOne(d => d.User).WithMany(p => p.Orders)
+				.HasForeignKey(d => d.UserId)
+				.HasConstraintName("FK__orders__userId__22751F6C");
 		});
 
 		modelBuilder.Entity<OrderItem>(entity =>
@@ -205,11 +208,11 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 
 			entity.HasOne(d => d.Order).WithMany()
 				.HasForeignKey(d => d.OrderId)
-				.HasConstraintName("FK__order_ite__order__7B5B524B");
+				.HasConstraintName("FK__order_ite__order__25518C17");
 
 			entity.HasOne(d => d.Product).WithMany()
 				.HasForeignKey(d => d.ProductId)
-				.HasConstraintName("FK__order_ite__produ__7C4F7684");
+				.HasConstraintName("FK__order_ite__produ__2645B050");
 		});
 
 		modelBuilder.Entity<ParentCategory>(entity =>

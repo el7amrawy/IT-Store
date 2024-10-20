@@ -24,12 +24,10 @@ go
 --isdeleted bit not null
 --)
 --go
-
 create table addresses(
 addressID int primary key identity(500,1),
-id int FOREIGN key references AspNetUsers(id),
-address_line_1 nvarchar(150) not null,
-address_line_2 nvarchar(150),
+userId int FOREIGN key references AspNetUsers(id),
+address_line nvarchar(150) not null,
 city nvarchar(50) not null,
 country nvarchar(50) not null,
 landmark nvarchar(100),
@@ -144,17 +142,17 @@ go
 
 create table orders(
 orderID int primary key identity,
-id int foreign key references AspNetUsers(id),
+userId int foreign key references AspNetUsers(id),
+addressID int foreign key references addresses(addressID) not null,
 total int not null,
 created_at datetime not null,
 updated_at datetime not null
 )
-go
 
 create table order_items(
 orderID int foreign key references orders(orderID),
 productID int foreign key references products(productID),
-quantity int,
+quantity int not null,
 created_at datetime not null,
 updated_at datetime not null
 )

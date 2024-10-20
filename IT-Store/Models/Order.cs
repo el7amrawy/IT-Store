@@ -2,17 +2,21 @@
 
 public partial class Order
 {
-    public int OrderId { get; set; }
+	public int OrderId { get; set; }
 
-    public int? Id { get; set; }
+	public int? UserId { get; set; }
 
-    public int Total { get; set; }
+	public int AddressId { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+	public int Total { get; set; }
 
-    public DateTime UpdatedAt { get; set; }
+	public DateTime CreatedAt { get; set; }
 
-    public virtual User? IdNavigation { get; set; }
+	public DateTime UpdatedAt { get; set; }
 
-    public virtual ICollection<PaymentDetail> PaymentDetails { get; set; } = new List<PaymentDetail>();
+	public virtual Address Address { get; set; } = null!;
+
+	public virtual ICollection<PaymentDetail> PaymentDetails { get; set; } = new List<PaymentDetail>();
+
+	public virtual User? User { get; set; }
 }
