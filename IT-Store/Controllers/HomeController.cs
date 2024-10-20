@@ -32,8 +32,9 @@ namespace IT_Store.Controllers
             return View(model);
         }
         [HttpGet]
-        public IActionResult Products(int id) {
-            return View(_productRep.GetByIdWithCategory(id));
+        public IActionResult Product(int id) {
+            Product product = _productRep.GetByIdWithCategory(id);
+			return View(new ViewModel_ProductHome { Product =product, RelatedProducts = _productRep.FilterProducts((int)product.CategoryId, pageSize: 3) });
         }
     }
 }

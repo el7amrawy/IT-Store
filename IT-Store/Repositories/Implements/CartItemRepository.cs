@@ -12,7 +12,19 @@ namespace IT_Store.Repositories.Implements
         {
 			_db = db;
 		}
-        public override CartItem GetById(int cartId)
+
+		public void DeleteByCartIdAndProductId(int cartId, int productId)
+		{
+			CartItem cartItem=GetByCartIdAndProductId(cartId, productId);
+			_db.CartItems.Remove(cartItem);
+		}
+
+		public CartItem GetByCartIdAndProductId(int cartId, int productId)
+		{
+			return _db.CartItems.FirstOrDefault(c => c.CartId == cartId && productId == c.ProductId);
+		}
+
+		public override CartItem GetById(int cartId)
 		{
 			if (!IsExisted(cartId))
 				throw new Exception("Cart is not found");

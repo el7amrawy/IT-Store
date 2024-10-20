@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using System.ComponentModel.DataAnnotations;
 
 namespace IT_Store.ViewModels
 {
@@ -10,6 +11,7 @@ namespace IT_Store.ViewModels
 		[Required]
 		[DataType(DataType.Password)]
 		public string Password { get; set; }
+		[Display(Name="Remember Me")]
 		public bool RememberMe { get; set; }
 	}
 }

@@ -77,7 +77,6 @@ namespace IT_Store.Controllers
 					{
 						if (await _userManager.CheckPasswordAsync(user,model.Password))
 						{
-							await _userManager.AddToRoleAsync(user, "User");
 							await _signInManager.SignInAsync(
 								user,
 								new AuthenticationProperties { IsPersistent = model.RememberMe, ExpiresUtc = DateTime.Now.AddDays(1) }

@@ -1,6 +1,6 @@
-﻿@model Product
+﻿@model ViewModel_ProductHome
 @{
-	ViewBag.Title = Model.Name;
+	ViewBag.Title = Model.Product.Name;
 }
 
 <!-- SECTION -->
@@ -13,7 +13,7 @@
 			<div class="col-md-5">
 				<div id="product-main-img">
 					<div class="product-preview">
-						<img src="/@Model.Cover" alt="">
+						<img src="/@Model.Product.Cover" alt="">
 					</div>
 				</div>
 			</div>
@@ -42,7 +42,7 @@
 			<!-- Product details -->
 			<div class="col-md-5">
 				<div class="product-details">
-					<h2 class="product-name">@Html.DisplayFor(t=>t.Name)</h2>
+					<h2 class="product-name">@Html.DisplayFor(model => model.Product.Name)</h2>
 					@* <div>
 						<div class="product-rating">
 							<i class="fa fa-star"></i>
@@ -54,10 +54,10 @@
 						<a class="review-link" href="#">10 Review(s) | Add your review</a>
 					</div> *@
 					<div>
-						<h3 class="product-price">E£@Model.Price@*<del class="product-old-price">$990.00</del>*@</h3>
-						<span class="product-available">@(Model.Instock?"In Stock":"Out of Stock")</span>
+						<h3 class="product-price">E£@Model.Product.Price@*<del class="product-old-price">$990.00</del>*@</h3>
+						<span class="product-available">@(Model.Product.Instock?"In Stock":"Out of Stock")</span>
 					</div>
-					<p>@Html.DisplayFor(p=>p.Description)</p>
+					<p>@Html.DisplayFor(model => model.Product.Description)</p>
 					@* <div class="product-options">
 						<label>
 							Size
@@ -72,7 +72,7 @@
 							</select>
 						</label>
 					</div> *@
-					@if (Model.Instock)
+					@if (Model.Product.Instock)
 					{
 						<div class="add-to-cart">
 							<div class="qty-label">
@@ -83,7 +83,12 @@
 									<span class="qty-down">-</span>
 								</div>
 							</div>
-							<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+
+							<button class="add-to-cart-btn">
+								<a asp-action="AddToCart" asp-controller="Cart" asp-route-productid="@Model.Product.ProductId">
+									<i class="fa fa-shopping-cart"></i> add to cart
+								</a>
+							</button>
 						</div>						
 					}
 					@* <ul class="product-btns">
@@ -92,7 +97,7 @@
 
 					<ul class="product-links">
 						<li>Category:</li>
-						<li><a href="#">@Html.DisplayFor(p=>p.Category.Name)</a></li>
+						<li><a asp-action="Store" asp-controller="Home" asp-route-categoryid="@Model.Product.CategoryId">@Html.DisplayFor(model=>model.Product.Category.Name)</a></li>
 					</ul>
 
 					<ul class="product-links">
@@ -122,7 +127,7 @@
 						<div id="tab1" class="tab-pane fade in active">
 							<div class="row">
 								<div class="col-md-12">
-									<p>@Html.DisplayFor(prop=>prop.Description)</p>
+									<p>@Html.DisplayFor(model=>model.Product.Description)</p>
 									</div>
 							</div>
 						</div>
@@ -131,7 +136,7 @@
 						<div id="tab2" class="tab-pane fade in">
 							<div class="row">
 								<div class="col-md-12">
-									<p>@Html.DisplayFor(p=>p.Summary)</p>
+									<p>@Html.DisplayFor(model => model.Product.Summary)</p>
 								</div>
 							</div>
 						</div>
@@ -332,124 +337,11 @@
 				<div class="section-title text-center">
 					<h3 class="title">Related Products</h3>
 				</div>
+				@foreach (var item in Model.RelatedProducts)
+				{
+					<partial name="~/Views/PartialViews/Product_Patial.cshtml" model="item" />
+				}
 			</div>
-
-			<!-- product -->
-			<div class="col-md-3 col-xs-6">
-				<div class="product">
-					<div class="product-img">
-						<img src="./img/product01.png" alt="">
-						<div class="product-label">
-							<span class="sale">-30%</span>
-						</div>
-					</div>
-					<div class="product-body">
-						<p class="product-category">Category</p>
-						<h3 class="product-name"><a href="#">product name goes here</a></h3>
-						<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-						<div class="product-rating">
-						</div>
-						<div class="product-btns">
-							<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-							<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-							<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-						</div>
-					</div>
-					<div class="add-to-cart">
-						<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-					</div>
-				</div>
-			</div>
-			<!-- /product -->
-			<!-- product -->
-			<div class="col-md-3 col-xs-6">
-				<div class="product">
-					<div class="product-img">
-						<img src="./img/product02.png" alt="">
-						<div class="product-label">
-							<span class="new">NEW</span>
-						</div>
-					</div>
-					<div class="product-body">
-						<p class="product-category">Category</p>
-						<h3 class="product-name"><a href="#">product name goes here</a></h3>
-						<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-						<div class="product-rating">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-						<div class="product-btns">
-							<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-							<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-							<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-						</div>
-					</div>
-					<div class="add-to-cart">
-						<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-					</div>
-				</div>
-			</div>
-			<!-- /product -->
-
-			<div class="clearfix visible-sm visible-xs"></div>
-
-			<!-- product -->
-			<div class="col-md-3 col-xs-6">
-				<div class="product">
-					<div class="product-img">
-						<img src="./img/product03.png" alt="">
-					</div>
-					<div class="product-body">
-						<p class="product-category">Category</p>
-						<h3 class="product-name"><a href="#">product name goes here</a></h3>
-						<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-						<div class="product-rating">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star-o"></i>
-						</div>
-						<div class="product-btns">
-							<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-							<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-							<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-						</div>
-					</div>
-					<div class="add-to-cart">
-						<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-					</div>
-				</div>
-			</div>
-			<!-- /product -->
-			<!-- product -->
-			<div class="col-md-3 col-xs-6">
-				<div class="product">
-					<div class="product-img">
-						<img src="./img/product04.png" alt="">
-					</div>
-					<div class="product-body">
-						<p class="product-category">Category</p>
-						<h3 class="product-name"><a href="#">product name goes here</a></h3>
-						<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-						<div class="product-rating">
-						</div>
-						<div class="product-btns">
-							<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-							<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-							<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-						</div>
-					</div>
-					<div class="add-to-cart">
-						<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-					</div>
-				</div>
-			</div>
-			<!-- /product -->
-
 		</div>
 		<!-- /row -->
 	</div>
