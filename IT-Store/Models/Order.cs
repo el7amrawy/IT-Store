@@ -14,7 +14,11 @@ public partial class Order
 
 	public DateTime UpdatedAt { get; set; }
 
+	public bool Isdeleted { get; set; }
+
 	public virtual Address Address { get; set; } = null!;
+
+	public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
 	public virtual ICollection<PaymentDetail> PaymentDetails { get; set; } = new List<PaymentDetail>();
 

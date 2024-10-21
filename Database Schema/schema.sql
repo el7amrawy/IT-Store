@@ -145,6 +145,7 @@ orderID int primary key identity,
 userId int foreign key references AspNetUsers(id),
 addressID int foreign key references addresses(addressID) not null,
 total int not null,
+isdeleted bit not null,
 created_at datetime not null,
 updated_at datetime not null
 )
@@ -155,6 +156,7 @@ productID int foreign key references products(productID),
 quantity int not null,
 created_at datetime not null,
 updated_at datetime not null
+primary key clustered(orderid,productid)
 )
 go
 

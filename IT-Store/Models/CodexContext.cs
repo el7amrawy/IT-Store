@@ -174,6 +174,7 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 			entity.Property(e => e.CreatedAt)
 				.HasColumnType("datetime")
 				.HasColumnName("created_at");
+			entity.Property(e => e.Isdeleted).HasColumnName("isdeleted");
 			entity.Property(e => e.Total).HasColumnName("total");
 			entity.Property(e => e.UpdatedAt)
 				.HasColumnType("datetime")
@@ -192,27 +193,29 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 
 		modelBuilder.Entity<OrderItem>(entity =>
 		{
-			entity
-				.HasNoKey()
-				.ToTable("order_items");
+			entity.HasKey(e => new { e.OrderId, e.ProductId }).HasName("PK__order_it__BAD83E69CCB0EC59");
 
+			entity.ToTable("order_items");
+
+			entity.Property(e => e.OrderId).HasColumnName("orderID");
+			entity.Property(e => e.ProductId).HasColumnName("productID");
 			entity.Property(e => e.CreatedAt)
 				.HasColumnType("datetime")
 				.HasColumnName("created_at");
-			entity.Property(e => e.OrderId).HasColumnName("orderID");
-			entity.Property(e => e.ProductId).HasColumnName("productID");
 			entity.Property(e => e.Quantity).HasColumnName("quantity");
 			entity.Property(e => e.UpdatedAt)
 				.HasColumnType("datetime")
 				.HasColumnName("updated_at");
 
-			entity.HasOne(d => d.Order).WithMany()
+			entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
 				.HasForeignKey(d => d.OrderId)
-				.HasConstraintName("FK__order_ite__order__25518C17");
+				.OnDelete(DeleteBehavior.ClientSetNull)
+				.HasConstraintName("FK__order_ite__order__46B27FE2");
 
-			entity.HasOne(d => d.Product).WithMany()
+			entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
 				.HasForeignKey(d => d.ProductId)
-				.HasConstraintName("FK__order_ite__produ__2645B050");
+				.OnDelete(DeleteBehavior.ClientSetNull)
+				.HasConstraintName("FK__order_ite__produ__47A6A41B");
 		});
 
 		modelBuilder.Entity<ParentCategory>(entity =>
