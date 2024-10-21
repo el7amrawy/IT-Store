@@ -1,4 +1,4 @@
-## For Fresh databse start
+## For Fresh database start
 1) ### Run migrations
 
 ```bash
