@@ -13,6 +13,11 @@ namespace IT_Store.Repositories.Implements
 			_db = db;
 		}
 
+		public void Delete(CartItem item)
+		{
+			_db.Remove(item);
+		}
+
 		public void DeleteByCartIdAndProductId(int cartId, int productId)
 		{
 			CartItem cartItem=GetByCartIdAndProductId(cartId, productId);
