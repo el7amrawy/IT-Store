@@ -74,22 +74,19 @@
 					</div> *@
 					@if (Model.Product.Instock)
 					{
-						<div class="add-to-cart">
+						<form class="add-to-cart" method="get" asp-action="AddToCart" asp-controller="Cart">
+							<input hidden name="productid" value="@Model.Product.ProductId" />
 							<div class="qty-label">
 								Qty
 								<div class="input-number">
-									<input type="number">
-									<span class="qty-up">+</span>
-									<span class="qty-down">-</span>
+									<input type="number" name="Quantity" value="1">
 								</div>
 							</div>
 
-							<button class="add-to-cart-btn">
-								<a asp-action="AddToCart" asp-controller="Cart" asp-route-productid="@Model.Product.ProductId">
-									<i class="fa fa-shopping-cart"></i> add to cart
-								</a>
+							<button type="submit" class="add-to-cart-btn">
+								<i class="fa fa-shopping-cart"></i> add to cart
 							</button>
-						</div>						
+						</form>						
 					}
 					@* <ul class="product-btns">
 						<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>

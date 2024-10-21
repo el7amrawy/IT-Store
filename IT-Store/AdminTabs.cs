@@ -7,6 +7,7 @@
 		Brands,
 		Categories,
 		ParentCategories,
-		Roles
+		Roles,
+		Orders
 	}
 }

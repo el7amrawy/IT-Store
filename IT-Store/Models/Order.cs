@@ -1,7 +1,10 @@
-﻿namespace IT_Store.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace IT_Store.Models;
 
 public partial class Order
 {
+	[Display(Name ="Order Id")]
 	public int OrderId { get; set; }
 
 	public int? UserId { get; set; }
@@ -9,7 +12,7 @@ public partial class Order
 	public int AddressId { get; set; }
 
 	public int Total { get; set; }
-
+	[Display(Name ="Created at")]
 	public DateTime CreatedAt { get; set; }
 
 	public DateTime UpdatedAt { get; set; }

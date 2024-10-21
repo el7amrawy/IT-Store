@@ -41,22 +41,29 @@ namespace IT_Store.Controllers
 
 				var cart = _cartRep.GetCartByUserId(userId);
 				var cartItems = _cartItemRep.GetItemsByCartId(cart.CartId);
-
-				int total = 0;
-				foreach (var item in cartItems)
+				if (cartItems.Count > 0)
 				{
-					total += item.Quantity * item.Product.Price;
+					int total = 0;
+					foreach (var item in cartItems)
+					{
+						total += item.Quantity * item.Product.Price;
+					}
+
+					var order = new Order { AddressId = addressId, UserId = userId, CreatedAt = datetime, UpdatedAt = datetime, Total = total };
+
+					foreach (var item in cartItems)
+					{
+						order.OrderItems.Add(new OrderItem { ProductId = item.ProductId, CreatedAt = datetime, UpdatedAt = datetime, Quantity = item.Quantity });
+						_cartItemRep.Delete(item);
+					}
+					_orderRep.Add(order);
+					_orderRep.Save();
 				}
-
-				var order = new Order { AddressId = addressId, UserId = userId, CreatedAt = datetime, UpdatedAt = datetime, Total = total };
-
-                foreach (var item in cartItems)
-                {
-					order.OrderItems.Add(new OrderItem { ProductId = item.ProductId, CreatedAt = datetime, UpdatedAt = datetime, Quantity = item.Quantity });
-					_cartItemRep.Delete(item);
-                }
-				_orderRep.Add(order);
-				_orderRep.Save();
+				else
+				{
+					//ModelState.AddModelError("","Cart is empty");
+					return this.RedirectToReferer();
+				}
             }
 			catch (Exception ex) { 
 				ModelState.AddModelError("",ex.Message);

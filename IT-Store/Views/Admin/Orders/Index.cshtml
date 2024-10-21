@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Order>
+@{
+	Layout = "_Admin-Layout";
+	ViewData["Title"] = "Orders";
+}
+
+<div class="row">
+	<div class="col-12 col-lg-8 col-xxl-12 d-flex">
+		<div class="card flex-fill">
+			<div class="card-header">
+
+				<h5 class="card-title mb-0">Orders</h5>
+			</div>
+			<table class="table table-hover my-0">
+				<thead>
+					<tr>
+						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.OrderId)</th>
+						<th>Customer Name</th>
+						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.Total)</th>
+						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.CreatedAt)</th>
+						<th class="d-none d-md-table-cell"></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td>@item.OrderId</td>
+							<td>@(item.User.FirstName) @(item.User.LastName)</td>
+							<td class="d-none d-xl-table-cell">E£@Html.DisplayFor(modelItem => item.Total)</td>
+							<td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+							<td class="d-none d-xl-table-cell">
+								<a class="btn text-white bg-primary" asp-action="Details" asp-controller="Orders" asp-route-id="@item.OrderId">
+									<i class="align-middle" data-feather="info"></i> <span class="align-middle">Details</span>
+								</a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>

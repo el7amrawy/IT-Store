@@ -38,7 +38,7 @@ namespace IT_Store
 
             app.MapControllerRoute(
                 name: "home",
-                pattern:"{action}/{id?}",
+                pattern:"{action=Index}/{id?}",
                 new {controller="Home"}
             );
 
