@@ -8,12 +8,13 @@ namespace IT_Store.Controllers
     public class HomeController : Controller
     {
         private readonly IProductRepository _productRep;
-
-		public HomeController(IProductRepository productRep)
+        private readonly IBrandRepository _brandRep;
+		public HomeController(IProductRepository productRep, IBrandRepository brandRep)
 		{
 			_productRep = productRep;
+			_brandRep = brandRep;
 		}
-        [HttpGet]
+		[HttpGet]
 		public IActionResult Index()
         {
 			var model = new ViewModel_IndexHome(_productRep.GetAllWithCategory(1,7));
@@ -25,9 +26,10 @@ namespace IT_Store.Controllers
             var model = new ViewModel_StoreHome
             {
                 //Products = _productRep.FilterProducts(categoryId, minPrice, maxPrice, brandId, pageNumber),
-                Products = _productRep.SearchAndFilter(searchTerm, categoryId, minPrice, maxPrice, brandId, pageNumber,pageSize=12),
-                Count = _productRep.SearchedAndFilteredCount(searchTerm,categoryId, minPrice, maxPrice, brandId),
-                PageSize= pageSize == 0 ? 10 : pageSize
+                Products = _productRep.SearchAndFilter(searchTerm, categoryId, minPrice, maxPrice, brandId, pageNumber, pageSize = 12),
+                Count = _productRep.SearchedAndFilteredCount(searchTerm, categoryId, minPrice, maxPrice, brandId),
+                PageSize = pageSize == 0 ? 10 : pageSize,
+                Brands = _brandRep.GetTop(5)
             };
             return View(model);
         }

@@ -19,6 +19,11 @@ namespace IT_Store.Repositories.Implements
 			return _db.Brands.FirstOrDefault(b=>b.BrandId==id);
 		}
 
+		public List<Brand> GetTop(int count)
+		{
+			return _db.Brands.Take(count).ToList();
+		}
+
 		public override bool IsExisted(int id)
 		{
 			return _db.Brands.Any(b=>b.BrandId==id);

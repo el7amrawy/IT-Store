@@ -7,5 +7,6 @@ namespace IT_Store.ViewModels
 		public IEnumerable<Product> Products { get; set; }
 		public int Count {  get; set; }
 		public int PageSize { get; set; }
+		public List<Brand> Brands { get; set; }
 	}
 }
