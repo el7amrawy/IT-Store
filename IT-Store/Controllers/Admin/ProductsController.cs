@@ -17,10 +17,16 @@ namespace IT_Store.Controllers.Admin
 			_repository = repository;
 		}
 		[HttpGet]
-		public IActionResult Index()
+		public IActionResult Index(int pageNumber)
 		{
 			TempData["AdminTabs"] = AdminTabs.Products.ToString();
-			return View("~/Views/Admin/Products/Index.cshtml", _repository.GetAll());
+
+			if(pageNumber==0)
+				pageNumber = 1;
+			var products = _repository.GetAll(pageNumber);
+
+			ViewBag.Count = _repository.GetAllCount();
+			return View("~/Views/Admin/Products/Index.cshtml", products);
 		}
 		[HttpGet]
 		public IActionResult Add([FromServices] IBrandRepository brandRep, [FromServices] ICategoryRepository categoryRep)

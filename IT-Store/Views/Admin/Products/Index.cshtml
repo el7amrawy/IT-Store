@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<Product>
 @{
-    ViewData["Title"] = "Products";
-    Layout = "~/Views/Shared/_Admin-Layout.cshtml";
+	ViewData["Title"] = "Products";
+	Layout = "~/Views/Shared/_Admin-Layout.cshtml";
+	int Count = ViewBag.Count;
 }
 
 <a class=" m-3 btn bg-primary text-white" asp-action="Add" asp-asp-controller="Products">Add Product</a>
 
 <div class="row">
-	<div class="col-12 col-lg-8 col-xxl-12 d-flex">
+	<div class="col-12 col-lg-8 col-xxl-12 d-flex flex-column">
 		<div class="card flex-fill">
 			<div class="card-header">
 
@@ -50,5 +51,21 @@
 				</tbody>
 			</table>
 		</div>
+		@if (Count > 10)
+		{
+		<nav aria-label="Page navigation example">
+			<ul class="pagination">
+				@for (int i = 1; i <= Math.Ceiling(Count / 10m); i++)
+				{
+					<li class="page-item"><a class="page-link" asp-route-pagenumber="@i" asp-action="Index" asp-controller="Products">@i</a></li>
+				}
+			</ul>
+		</nav>
+		}
 	</div>
 </div>
+
+@section Styles{
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+}

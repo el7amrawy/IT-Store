@@ -4,6 +4,6 @@ namespace IT_Store.Repositories.Interfaces
 {
 	public interface IBrandRepository:IRepository<Brand>
 	{
-		public List<Brand> GetTop(int number);
+		public List<Brand> GetTop(int count);
 	}
 }

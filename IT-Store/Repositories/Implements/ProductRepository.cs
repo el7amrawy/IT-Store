@@ -143,5 +143,15 @@ namespace IT_Store.Repositories.Implements
 
 			return query.Count(p => !p.Isdeleted);
 		}
+
+		public IEnumerable<Product> GetAll(int pageNumber, int pageSize = 10)
+		{
+			return _db.Products.OrderByDescending(p=>p.CreatedAt).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+		}
+
+		public int GetAllCount()
+		{
+			return _db.Products.Count();
+		}
 	}
 }
