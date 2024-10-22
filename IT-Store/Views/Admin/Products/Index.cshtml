@@ -3,6 +3,11 @@
 	ViewData["Title"] = "Products";
 	Layout = "~/Views/Shared/_Admin-Layout.cshtml";
 	int Count = ViewBag.Count;
+	int pageNumber;
+	if (!int.TryParse(Context.Request.Query["pageNumber"], out pageNumber))
+	{
+		pageNumber = 1;
+	}
 }
 
 <a class=" m-3 btn bg-primary text-white" asp-action="Add" asp-asp-controller="Products">Add Product</a>
@@ -57,7 +62,7 @@
 			<ul class="pagination">
 				@for (int i = 1; i <= Math.Ceiling(Count / 10m); i++)
 				{
-					<li class="page-item"><a class="page-link" asp-route-pagenumber="@i" asp-action="Index" asp-controller="Products">@i</a></li>
+					<li class="page-item @(i==pageNumber?"active":"")"><a class="page-link" asp-route-pageNumber="@i" asp-action="Index" asp-controller="Products">@i</a></li>
 				}
 			</ul>
 		</nav>

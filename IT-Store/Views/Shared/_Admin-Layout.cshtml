@@ -89,6 +89,13 @@
 				</a>
 
 				<div class="navbar-collapse collapse">
+					<div class="navbar-nav navbar-align">
+						<span class="text-uppercase mx-4">Welcome @User.Identity.Name</span>
+						<a asp-action="LogOut" asp-controller="Admin">
+							<i class="align-middle" data-feather="log-out"></i>
+							<span class="align-middle">Log Out</span>
+						</a>
+					</div>
 					@*<ul class="navbar-nav navbar-align">
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
