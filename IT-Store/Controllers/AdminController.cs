@@ -58,39 +58,6 @@ namespace IT_Store.Controllers
             }
             return RedirectToAction("Roles");
         }
-
-		//public IActionResult Register()
-		//{
-		//	return View("~/Views/Account/Register.cshtml");
-		//}
-		//[HttpPost]
-		//public async Task<IActionResult> Register(ViewModel_RegisterAccount model)
-		//{
-		//	if (ModelState.IsValid)
-		//	{
-		//		var user = model.User;
-		//		var result = await _userManager.CreateAsync(user, model.Password);
-		//		if (result.Succeeded)
-		//		{
-		//			await _userManager.AddToRoleAsync(user, "Admin");
-
-		//			await _signInManager.SignInAsync(
-		//				user,
-		//				new AuthenticationProperties { IsPersistent = model.RememberMe, ExpiresUtc = DateTime.Now.AddDays(7) }
-		//			);
-
-		//			return RedirectToAction("Index", "Home");
-		//		}
-		//		else
-		//		{
-		//			foreach (var item in result.Errors)
-		//			{
-		//				ModelState.AddModelError("", item.Description);
-		//			}
-		//		}
-		//	}
-		//	return View("~/Views/Account/Register.cshtml");
-		//}
 		[HttpGet]
 		public IActionResult LogIn()
 		{
@@ -134,6 +101,6 @@ namespace IT_Store.Controllers
 		{
 			await _signInManager.SignOutAsync();
 			return RedirectToAction("", "Home");
-		}
+		}		
 	}
 }

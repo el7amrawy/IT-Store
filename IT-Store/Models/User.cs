@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace IT_Store.Models;
 
@@ -11,7 +12,7 @@ public partial class User : IdentityUser<int>
     public DateOnly? DateOfBirth { get; set; }
 
     public string? Avatar { get; set; }
-
+    [Display(Name ="Created At")]
     public DateTime CreatedAt { get; set; }
 
     public bool Isdeleted { get; set; }

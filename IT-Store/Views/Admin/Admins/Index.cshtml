@@ -1,0 +1,39 @@
+﻿@model IEnumerable<User>
+@{
+	Layout = "_Admin-Layout";
+	ViewData["Title"] = "Admins";
+}
+
+<a class=" m-3 btn bg-primary text-white" asp-action="AddAdmin" asp-controller="Admins">Add Admin</a>
+
+<div class="row">
+	<div class="col-12 col-lg-8 col-xxl-12 d-flex">
+		<div class="card flex-fill">
+			<div class="card-header">
+
+				<h5 class="card-title mb-0">Admins</h5>
+			</div>
+			<table class="table table-hover my-0">
+				<thead>
+					<tr>
+						<th>@Html.DisplayNameFor(model=>model.Id)</th>
+						<th class="d-none d-xl-table-cell">Name</th>
+						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.Email)</th>
+						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.CreatedAt)</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td>@Html.DisplayFor(m=>item.Id)</td>
+							<td>@item.FirstName @item.LastName</td>
+							<td>@Html.DisplayFor(m=>item.Email)</td>
+							<td>@Html.DisplayFor(m=>item.CreatedAt)</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

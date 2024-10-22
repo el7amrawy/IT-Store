@@ -8,6 +8,7 @@
 		Categories,
 		ParentCategories,
 		Roles,
-		Orders
+		Orders,
+		Admins
 	}
 }
