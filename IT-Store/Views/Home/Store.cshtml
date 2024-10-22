@@ -13,13 +13,13 @@
 		<!-- row -->
 		<div class="row">
 			<!-- ASIDE -->
-			<form id="aside" class="col-md-3">
+			<div id="aside" class="col-md-3">
 				<!-- aside Widget -->
 				<div class="aside">
 					<h3 class="aside-title">Categories</h3>
 					<div class="checkbox-filter">
 						<div class="input-checkbox">
-							<input type="checkbox" name="laptops" id="category-1">
+							<input type="checkbox" class="categoryIds" value="2" id="category-1">
 							<label for="category-1">
 								<span></span>
 								Laptops
@@ -27,7 +27,7 @@
 						</div>
 
 						<div class="input-checkbox">
-							<input type="checkbox" name="Smartphones" id="category-2">
+							<input type="checkbox" class="categoryIds" value="3" id="category-2">
 							<label for="category-2">
 								<span></span>
 								Smartphones
@@ -35,7 +35,7 @@
 						</div>
 
 						<div class="input-checkbox">
-							<input type="checkbox" name="Cameras" id="category-3">
+							<input type="checkbox" class="categoryIds" value="4" id="category-3">
 							<label for="category-3">
 								<span></span>
 								Cameras
@@ -43,7 +43,7 @@
 						</div>
 
 						<div class="input-checkbox">
-							<input type="checkbox" name="Accessories" id="category-4">
+							<input type="checkbox" class="categoryIds" value="9" id="category-4">
 							<label for="category-4">
 								<span></span>
 								Accessories
@@ -51,10 +51,10 @@
 						</div>
 
 						<div class="input-checkbox">
-							<input type="checkbox" name="Laptops" id="category-5">
+							<input type="checkbox" class="categoryIds" value="8" id="category-5">
 							<label for="category-5">
 								<span></span>
-								Laptops
+								Headphones
 							</label>
 						</div>
 					</div>
@@ -64,17 +64,13 @@
 				<div class="aside">
 					<h3 class="aside-title">Price</h3>
 					<div class="price-filter">
-						<div id="price-slider"></div>
-						<div class="input-number price-min">
-							<input id="price-min" name="minprice" type="number">
-							<span class="qty-up">+</span>
-							<span class="qty-down">-</span>
+						<div>
+							<div>Min Price</div>
+							<input id="price-min" value="0" name="minprice" type="number">
 						</div>
-						<span>-</span>
-						<div class="input-number price-max">
-							<input id="price-max" name="maxprice" type="number">
-							<span class="qty-up">+</span>
-							<span class="qty-down">-</span>
+						<div>
+							<div>Max Price</div>
+							<input id="price-max" value="1000000" name="maxprice" type="number">
 						</div>
 					</div>
 				</div>
@@ -83,19 +79,22 @@
 				<div class="aside">
 					<h3 class="aside-title">Brands</h3>
 					<div class="checkbox-filter">
-						@foreach (var item in Model.Brands)
+						@for(int i = 0; i < Model.Brands.Count; i++)
 						{
 							<div class="input-checkbox">
-								<input type="checkbox" value="@item.BrandId" id="brand-@item.BrandId">
-								<label for="brand-@item.BrandId">
+								<input type="checkbox" class="brandids" value="@Model.Brands[i].BrandId" id="brand-@Model.Brands[i].BrandId">
+								<label for="brand-@Model.Brands[i].BrandId">
 									<span></span>
-									@item.Name
+									@Model.Brands[i].Name
 								</label>
 							</div>
 						}
 					</div>
 				</div>
-			</form>
+				<br />
+				<a href="s" id="submit" style="display:hidden"></a> 
+				<span id="anchor" searchTerm="@Context.Request.Query["searchTerm"]" style="background: red;padding: 10px;border-radius: 7px;color:white;cursor: pointer;">Apply</span>
+			</div>
 			<!-- /ASIDE -->
 			<!-- STORE -->
 			<div id="store" class="col-md-9">
@@ -110,7 +109,7 @@
 				<!-- store bottom filter -->
 				<div class="store-filter clearfix">
 					<ul class="store-pagination">
-						@if(Model.Count > Model.PageSize)
+						@if (Model.Count > Model.PageSize)
 						{
 							@for (int i = 1; i <= Math.Ceiling((double)Model.Count / Model.PageSize); i++)
 							{
@@ -132,3 +131,7 @@
 	<!-- /container -->
 </div>
 <!-- /SECTION -->
+
+@section Scripts{
+	<script src="/js/store.js"></script>
+}

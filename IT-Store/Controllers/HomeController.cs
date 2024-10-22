@@ -21,18 +21,40 @@ namespace IT_Store.Controllers
             return View(model);
         }
         [HttpGet]
-        public IActionResult Store(int categoryId , int minPrice, int maxPrice, int brandId, int pageNumber, int pageSize,string searchTerm)
-        {
-            var model = new ViewModel_StoreHome
-            {
-                //Products = _productRep.FilterProducts(categoryId, minPrice, maxPrice, brandId, pageNumber),
-                Products = _productRep.SearchAndFilter(searchTerm, categoryId, minPrice, maxPrice, brandId, pageNumber, pageSize = 12),
-                Count = _productRep.SearchedAndFilteredCount(searchTerm, categoryId, minPrice, maxPrice, brandId),
-                PageSize = pageSize == 0 ? 10 : pageSize,
-                Brands = _brandRep.GetTop(5)
-            };
-            return View(model);
-        }
+		public IActionResult Store(int categoryId, int minPrice, int maxPrice, int brandId, int pageNumber, int pageSize, string searchTerm)
+		{
+			var model = new ViewModel_StoreHome
+			{
+				//Products = _productRep.FilterProducts(categoryId, minPrice, maxPrice, brandId, pageNumber),
+				Products = _productRep.SearchAndFilter(searchTerm, categoryId, minPrice, maxPrice, brandId, pageNumber, pageSize = 12),
+				Count = _productRep.SearchedAndFilteredCount(searchTerm, categoryId, minPrice, maxPrice, brandId),
+				PageSize = pageSize == 0 ? 10 : pageSize,
+				Brands = _brandRep.GetTop(5)
+			};
+			return View(model);
+		}
+		[HttpGet]
+		public IActionResult StoreFilters(string categoryIds, int minPrice, int maxPrice, string brandIds, int pageNumber, int pageSize, string searchTerm) {
+			
+			List<int> categoryIdList=new List<int>();
+			List<int> brandIdList=new List<int>();
+
+			if (!string.IsNullOrWhiteSpace(categoryIds))
+				categoryIdList = categoryIds.Split(',').ToListOfInt();
+
+			if (!string.IsNullOrWhiteSpace(brandIds))
+				brandIdList = brandIds.Split(',').ToListOfInt();
+
+			var model = new ViewModel_StoreHome
+			{
+				//Products = _productRep.FilterProducts(categoryId, minPrice, maxPrice, brandId, pageNumber),
+				Products = _productRep.SearchAndFilter(searchTerm,categoryIdList,brandIdList,minPrice,maxPrice,1, pageSize=12),
+				Count = _productRep.SearchedAndFilteredCount(searchTerm,categoryIdList,brandIdList,minPrice,maxPrice),
+				PageSize = pageSize == 0 ? 12 : pageSize,
+				Brands = _brandRep.GetTop(5)
+			};
+			return View("~/Views/Home/Store.cshtml",model);
+		}
         [HttpGet]
         public IActionResult Product(int id) {
             Product product = _productRep.GetByIdWithCategory(id);

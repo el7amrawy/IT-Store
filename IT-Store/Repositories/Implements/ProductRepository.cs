@@ -1,6 +1,7 @@
 ﻿using IT_Store.Models;
 using IT_Store.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace IT_Store.Repositories.Implements
 {
@@ -152,6 +153,53 @@ namespace IT_Store.Repositories.Implements
 		public int GetAllCount()
 		{
 			return _db.Products.Count();
+		}
+
+		public IEnumerable<Product> SearchAndFilter(string searchTerm, List<int> categoryIds, List<int> brandIds, int minPrice = 0, int maxPrice = 0, int pageNumber = 1, int pageSize = 10)
+		{
+			if (pageNumber < 1)
+				pageNumber = 1;
+
+			var query = _db.Products.AsQueryable();
+
+			if (!string.IsNullOrWhiteSpace(searchTerm))
+				query = query.Where(p => p.Name.Contains(searchTerm) || (p.Description != null && p.Description.Contains(searchTerm)));
+
+			if (categoryIds.Count > 0)
+				query = query.Where(p => categoryIds.Contains((int)p.CategoryId));
+
+			if (minPrice != 0)
+				query = query.Where(p => p.Price >= minPrice);
+
+			if (maxPrice != 0)
+				query = query.Where(p => p.Price <= maxPrice);
+
+			if (brandIds.Count > 0)
+				query = query.Where(p => brandIds.Contains((int)p.BrandId));
+
+			return query.Where(x => !x.Isdeleted).OrderByDescending(p => p.CreatedAt).Skip((pageNumber - 1) * pageSize).Take(pageSize).Include(p => p.Category).ToList();
+		}
+
+		public int SearchedAndFilteredCount(string searchTerm, List<int> categoryIds, List<int> brandIds, int minPrice = 0, int maxPrice = 0)
+		{
+			var query = _db.Products.AsQueryable();
+
+			if (!string.IsNullOrWhiteSpace(searchTerm))
+				query = query.Where(p => p.Name.Contains(searchTerm) || (p.Description != null && p.Description.Contains(searchTerm)));
+
+			if (categoryIds.Count > 0)
+				query = query.Where(p => categoryIds.Contains((int)p.CategoryId));
+
+			if (minPrice != 0)
+				query = query.Where(p => p.Price >= minPrice);
+
+			if (maxPrice != 0)
+				query = query.Where(p => p.Price <= maxPrice);
+
+			if (brandIds.Count > 0)
+				query = query.Where(p => brandIds.Contains((int)p.BrandId));
+
+			return query.Count();
 		}
 	}
 }

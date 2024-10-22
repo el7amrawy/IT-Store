@@ -25,5 +25,14 @@ namespace IT_Store
 			}
 			return 0;
         }
+		public static List<int> ToListOfInt(this string[] stringArr)
+		{
+			var list = new List<int>();
+			foreach (var item in stringArr)
+			{
+				list.Add(int.Parse(item));
+			}
+			return list;
+		}
 	}
 }

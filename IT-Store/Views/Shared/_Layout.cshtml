@@ -90,7 +90,7 @@
 								<select class="input-select" name="categoryid" asp-items="categories">
 									<option value="0">All Categories</option>
 								</select>
-								<input name="searchTerm" class="input" placeholder="Search here">
+								<input name="searchTerm" value="@Context.Request.Query["searchTerm"]" class="input" placeholder="Search here">
 								<button class="search-btn">Search</button>
 							</form>
 						</div>
