@@ -17,15 +17,17 @@ namespace IT_Store.Controllers
 			_cartItemRepository = cartItemRepository;
 			_cartRepository = cartRepository;
 		}
-		[Route("/Cart")]
         [HttpGet]
         public IActionResult Index([FromServices] ICartItemRepository cartItemRep, [FromServices] ICartRepository cartRep)
         {
-            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-            int userId = int.Parse(userIdClaim.Value);
-            int cartId = cartRep.GetCartByUserId(userId).CartId;
-
-            return View(cartItemRep.GetItemsByCartId(cartId));
+            int userId=this.GetUserId();
+			var cart=cartRep.GetCartByUserId(userId);
+			if (cart == null) {
+				var dateTime=DateTime.Now;
+				cartRep.Add(new Cart { CreatedAt = dateTime, UpdatedAt = dateTime, UserId = userId });
+				cartRep.Save();
+			}
+            return View(cartItemRep.GetItemsByCartId(cartRep.GetCartByUserId(userId).CartId));
         }
         [HttpGet]
 		public IActionResult AddToCart(int productId,int quantity)
