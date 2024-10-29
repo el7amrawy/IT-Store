@@ -1,4 +1,6 @@
 ﻿using IT_Store.Models;
+using IT_Store.Repositories.Interfaces;
+using IT_Store.Services;
 using IT_Store.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,13 +13,15 @@ namespace IT_Store.Controllers.Admin
     public class AdminsController : Controller
     {
 		private readonly UserManager<User> _userManager;
+		RoleManager<IdentityRole<int>> _roleManager;
 
-		public AdminsController(UserManager<User> userManager)
-		{
-			_userManager = userManager;
-		}
+        public AdminsController(UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager)
+        {
+            _userManager = userManager;
+            _roleManager = roleManager;
+        }
 
-		public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
 		{
 			TempData["AdminTabs"] = AdminTabs.Admins.ToString();
 
@@ -51,5 +55,61 @@ namespace IT_Store.Controllers.Admin
 			}
 			return View("~/Views/Admin/Admins/AddAdmin.cshtml");
 		}
-	}
+		[HttpGet]
+		public async Task<IActionResult> Edit(int id) {
+			User user = await _userManager.FindByIdAsync(id.ToString());
+			if (user == null)
+			{
+				return this.RedirectToReferer();
+			}
+            var userRoles = await _userManager.GetRolesAsync(user);
+			var roles= _roleManager.Roles.ToList();
+			var model = new ViewModel_EditAdmin(user, userRoles.ToList(),roles);
+			return View("~/Views/Admin/Admins/Edit.cshtml",model);
+		}
+		[HttpPost]
+		public async Task<IActionResult> Edit(ViewModel_EditAdmin model, [FromServices] ICartRepository cartRepository)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+                    var user =await _userManager.FindByIdAsync(model.Id.ToString());
+					user.FirstName = model.FirstName;
+					user.LastName = model.LastName;
+					user.Email = model.Email;
+					user.UserName = model.UserName;
+
+                    if (model.Image != null)
+                    {
+                        user.Avatar = FileUpload.SaveImage(model.Image);
+                    }
+                    var result = await _userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        if (model.NewRole != null)
+                        {
+                            var res = await _userManager.AddToRoleAsync(user, model.NewRole);
+                            if (!res.Succeeded)
+                            {
+                                ModelState.AddModelError("Roles", "Failed to add new role");
+                            }
+                        }
+						return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        foreach (var item in result.Errors)
+                        {
+                            ModelState.AddModelError("", item.Description);
+                        }
+                    }
+                }
+				catch (Exception) {
+					ModelState.AddModelError("", "Failed to update the user");
+				}
+			}
+			return View(model);
+		}
+    }
 }

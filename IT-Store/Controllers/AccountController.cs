@@ -1,5 +1,6 @@
 ﻿using IT_Store.Models;
 using IT_Store.Repositories.Interfaces;
+using IT_Store.Services;
 using IT_Store.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -129,6 +130,16 @@ namespace IT_Store.Controllers
                 user.Email = model.Email;
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
+				try
+				{
+					if (model.Image != null) { 
+						user.Avatar = FileUpload.SaveImage(model.Image);
+					}
+				}
+				catch (Exception)
+				{
+					ModelState.AddModelError("Avatar", "Coudn't update profile picture");
+				}
 
                 var result = await _userManager.UpdateAsync(user);
                 if (!result.Succeeded)

@@ -27,7 +27,7 @@
 						<tr>
 							<td>@item.OrderId</td>
 							<td>@(item.User.FirstName) @(item.User.LastName)</td>
-							<td class="d-none d-xl-table-cell">E£@Html.DisplayFor(modelItem => item.Total)</td>
+							<td class="d-none d-xl-table-cell">E£<strong>@Html.DisplayFor(modelItem => item.Total)</strong></td>
 							<td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.CreatedAt)</td>
 							<td class="d-none d-xl-table-cell">
 								<a class="btn text-white bg-primary" asp-action="Details" asp-controller="Orders" asp-route-id="@item.OrderId">

@@ -20,6 +20,7 @@
 						<th class="d-none d-xl-table-cell">Name</th>
 						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.Email)</th>
 						<th class="d-none d-xl-table-cell">@Html.DisplayNameFor(model => model.CreatedAt)</th>
+						<th class="d-none d-xl-table-cell"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -30,6 +31,11 @@
 							<td>@item.FirstName @item.LastName</td>
 							<td>@Html.DisplayFor(m=>item.Email)</td>
 							<td>@Html.DisplayFor(m=>item.CreatedAt)</td>
+							<td>
+								<a class="btn text-white bg-secondary" asp-action="Edit" asp-controller="Admins" asp-route-id="@item.Id">
+									<i class="align-middle" data-feather="edit"></i> <span class="align-middle">Edit</span>
+								</a>
+							</td>
 						</tr>
 					}
 				</tbody>

@@ -28,6 +28,7 @@ namespace IT_Store.ViewModels
         [Required]
         public string LastName { get; set; } = null!;
         [Required]
+        [Display(Name ="Username")]
         public string UserName { get; set; } = null!;
         [Required]
         [DataType(DataType.EmailAddress)]
@@ -36,5 +37,6 @@ namespace IT_Store.ViewModels
         [Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
         public string? Avatar { get; set; }
+        public IFormFile? Image { get; set; }
     }
 }

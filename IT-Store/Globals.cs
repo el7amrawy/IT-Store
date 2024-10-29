@@ -1,9 +1,19 @@
-﻿using IT_Store.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace IT_Store
 {
+	public enum AdminTabs
+	{
+		Dashboard,
+		Products,
+		Brands,
+		Categories,
+		ParentCategories,
+		Roles,
+		Orders,
+		Admins
+	}
 	public static class ExtendedMethodes
 	{
 		[NonAction]

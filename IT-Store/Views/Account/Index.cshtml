@@ -8,19 +8,19 @@
         <div class="col-sm-10"><h1>@Model.FirstName @Model.LastName</h1></div>
         <div class="col-sm-2"><a href="/users" class="pull-right"></a></div>
     </div>
-    <div class="row">
+    <form asp-action="UpdateUser" enctype="multipart/form-data" class="row">
         <div class="col-sm-3">
             <div class="text-center">
                 <img src="@(Model.Avatar??"http://ssl.gstatic.com/accounts/ui/avatar_2x.png")" class="avatar img-circle img-thumbnail" alt="avatar">
                 <h6>Upload a different photo...</h6>
-                <input type="file" class="text-center center-block file-upload">
+                <input asp-for="Image" type="file" class="text-center center-block file-upload">
             </div>
             <br>
         </div><!--/col-3-->
         <div class="col-sm-9">
 
                 <div class="tab-pane" id="settings">
-                    <form class="form" asp-action="UpdateUser">
+                    <div class="form">
                     <div asp-validation-summary="All" class="text-danger"></div>
                         <input asp-for="Id" hidden />
                         <div class="form-group">
@@ -56,14 +56,17 @@
                             <button class="btn btn-lg btn-success pull-right" type="submit">Save</button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
 
             </div><!--/tab-pane-->
-        </div><!--/tab-content-->
+        </form><!--/tab-content-->
         <hr />
     <h4>Settings</h4>
-    <a asp-controller="Addresses" asp-action="Index" style="margin-bottom:20px;display:block;font-size:18px">Addresses</a>
+    <ul>
+        <li>
+            <a asp-controller="Addresses" asp-action="Index" style="margin-bottom:20px;display:block;font-size:18px">Addresses</a>
+        </li>
     </div><!--/col-9-->
     @section Scripts{
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
