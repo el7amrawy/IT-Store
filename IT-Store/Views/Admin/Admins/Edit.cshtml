@@ -31,12 +31,22 @@
                 </div>
                 <div class="form-group my-4">
                     <label class="control-label" asp-for="UserRoles"></label>
-                    <ul>
+                    <table class="table">
+                        <tbody>
                         @foreach (var item in Model.UserRoles)
                         {
-                            <li>@item</li>
+                            <tr class="mx-2 text-sm">
+                                <td>@item</td>
+                                <td>
+                                    <a asp-controller="Admins" asp-action="DeleteRole" asp-route-role="@item" class="link-underline-danger text-danger">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
                         }
-                    </ul>
+                        </tbody>
+                       
+                    </table>
                 </div>
                 <div class="form-group my-4">
                     <label class="control-label">Add New Role</label>
@@ -46,7 +56,7 @@
                     <span asp-validation-for="NewRole" class="text-danger"></span>
                 </div>
                 <div class="form-group my-4">
-                    <input type="submit" value="Edit" class="btn btn-primary" />
+                    <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </div>
         </div>

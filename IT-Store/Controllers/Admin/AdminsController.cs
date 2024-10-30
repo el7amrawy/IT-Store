@@ -111,5 +111,17 @@ namespace IT_Store.Controllers.Admin
 			}
 			return View(model);
 		}
+
+		[HttpGet]
+		public async Task<IActionResult> DeleteRole(string role)
+		{
+			int userId=this.GetUserId();
+			User user=await _userManager.FindByIdAsync(userId.ToString());
+			if (user == null) {
+				return this.RedirectToReferer();
+			}
+			var result = await _userManager.RemoveFromRoleAsync(user, role);
+			return this.RedirectToReferer();
+		}
     }
 }
