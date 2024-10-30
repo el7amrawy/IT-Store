@@ -38,7 +38,7 @@
                             <tr class="mx-2 text-sm">
                                 <td>@item</td>
                                 <td>
-                                    <a asp-controller="Admins" asp-action="DeleteRole" asp-route-role="@item" class="link-underline-danger text-danger">
+                                    <a asp-controller="Admins" asp-action="DeleteRole" asp-route-userId="@Model.Id" asp-route-role="@item" class="link-underline-danger text-danger">
                                         Delete
                                     </a>
                                 </td>

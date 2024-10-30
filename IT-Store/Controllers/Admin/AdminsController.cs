@@ -113,9 +113,8 @@ namespace IT_Store.Controllers.Admin
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> DeleteRole(string role)
+		public async Task<IActionResult> DeleteRole(string role,int userId)
 		{
-			int userId=this.GetUserId();
 			User user=await _userManager.FindByIdAsync(userId.ToString());
 			if (user == null) {
 				return this.RedirectToReferer();
