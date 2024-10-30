@@ -1,7 +1,7 @@
 ﻿@model ViewModel_EditAdmin
 @{
     Layout = "_Admin-Layout";
-    ViewBag.Title = "Edit Admin";
+    ViewBag.Title = "Edit Users & Admins";
 }
 
     <form class="row" asp-action="Edit" enctype="multipart/form-data">
@@ -61,7 +61,7 @@
             </div>
         </div>
         <div class="col-md-4 flex justify-content-end">
-            <img src="/@(Model?.Avatar??"http://ssl.gstatic.com/accounts/ui/avatar_2x.png")" />
+            <img src="@((Model?.Avatar!=null)?("/"+Model?.Avatar):("http://ssl.gstatic.com/accounts/ui/avatar_2x.png"))" alt="profile picture" />
             <div class="form-group my-4">
                 <label asp-for="Image" class="control-label">Update Profile Photo</label>
                 <input type="file" asp-for="Image" class="form-control" />

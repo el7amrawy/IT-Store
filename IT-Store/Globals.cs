@@ -12,7 +12,8 @@ namespace IT_Store
 		ParentCategories,
 		Roles,
 		Orders,
-		Admins
+		Admins,
+		Users
 	}
 	public static class ExtendedMethodes
 	{

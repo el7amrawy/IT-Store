@@ -78,6 +78,11 @@
 							<i class="align-middle" data-feather="users"></i> <span class="align-middle">Admins</span>
 						</a>
 					</li>
+					<li class="sidebar-item @(tab==AdminTabs.Users?"active":"")">
+						<a class="sidebar-link" asp-action="Index" asp-controller="Users">
+							<i class="align-middle" data-feather="users"></i> <span class="align-middle">Users</span>
+						</a>
+					</li>
 					<li class="sidebar-item @(tab==AdminTabs.Roles?"active":"")">
 						<a class="sidebar-link" asp-action="Roles" asp-controller="Admin">
 							<i class="align-middle" data-feather="shield"></i> <span class="align-middle">Roles</span>
