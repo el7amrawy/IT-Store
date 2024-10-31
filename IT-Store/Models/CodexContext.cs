@@ -176,8 +176,10 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
             entity.Property(e => e.Isdeleted).HasColumnName("isdeleted");
-            entity.Property(e => e.StatusId).HasColumnName("statusId").HasConversion<int>();
-            entity.Property(e => e.Total).HasColumnName("total");
+			entity.Property(e => e.StatusId)
+				.HasDefaultValue(1)
+				.HasColumnName("statusId");
+			entity.Property(e => e.Total).HasColumnName("total");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");

@@ -49,7 +49,7 @@ namespace IT_Store.Controllers
 						total += item.Quantity * item.Product.Price;
 					}
 
-					var order = new Order { AddressId = addressId, UserId = userId, CreatedAt = datetime, UpdatedAt = datetime, Total = total };
+					var order = new Order { AddressId = addressId, UserId = userId, CreatedAt = datetime, UpdatedAt = datetime, Total = total/*,StatusEnum=OrderStatusEnum.Pending */};
 
 					foreach (var item in cartItems)
 					{
