@@ -315,13 +315,11 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 
         modelBuilder.Entity<ProductAttribute>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__product___3214EC272D629DF7");
+            entity.HasKey(e => e.Id).HasName("PK__product___3214EC27B18CBC7A");
 
             entity.ToTable("product_attributes");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
