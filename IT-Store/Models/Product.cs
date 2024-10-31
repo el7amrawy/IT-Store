@@ -39,6 +39,8 @@ public partial class Product
     public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 
     public virtual Category? Category { get; set; }
-	public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
-	public virtual ICollection<ProductAttribute> ProductAttributes { get; set; } = new List<ProductAttribute>();
+
+    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+
+    public virtual ICollection<ProductsProductAttribute> ProductsProductAttributes { get; set; } = new List<ProductsProductAttribute>();
 }

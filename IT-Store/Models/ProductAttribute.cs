@@ -6,9 +6,7 @@ public partial class ProductAttribute
 
     public string Name { get; set; } = null!;
 
-    public string Value { get; set; } = null!;
-
     public DateTime CreatedAt { get; set; }
 
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public virtual ICollection<ProductsProductAttribute> ProductsProductAttributes { get; set; } = new List<ProductsProductAttribute>();
 }

@@ -32,8 +32,8 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<ProductAttribute> ProductAttributes { get; set; }
-
-	protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public virtual DbSet<ProductsProductAttribute> ProductsProductAttributes { get; set; }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		modelBuilder.Entity<Address>(entity =>
 		{
@@ -266,95 +266,96 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 				.HasConstraintName("FK__payment_d__order__7F2BE32F");
 		});
 
-		modelBuilder.Entity<Product>(entity =>
-		{
-			entity.HasKey(e => e.ProductId).HasName("PK__products__2D10D14A583B59AD");
+        modelBuilder.Entity<Product>(entity =>
+        {
+            entity.HasKey(e => e.ProductId).HasName("PK__products__2D10D14A583B59AD");
 
-			entity.ToTable("products");
+            entity.ToTable("products");
 
-			entity.Property(e => e.ProductId).HasColumnName("productID");
-			entity.Property(e => e.BrandId).HasColumnName("brandID");
-			entity.Property(e => e.CategoryId).HasColumnName("categoryID");
-			entity.Property(e => e.Cover)
-				.HasMaxLength(200)
-				.IsUnicode(false)
-				.HasColumnName("cover");
-			entity.Property(e => e.CreatedAt)
-				.HasColumnType("datetime")
-				.HasColumnName("created_at");
-			entity.Property(e => e.DeletedAt)
-				.HasColumnType("datetime")
-				.HasColumnName("deleted_at");
-			entity.Property(e => e.Description)
-				.HasMaxLength(500)
-				.HasColumnName("description");
-			entity.Property(e => e.Discount).HasColumnName("discount");
-			entity.Property(e => e.Instock).HasColumnName("instock");
-			entity.Property(e => e.Isdeleted).HasColumnName("isdeleted");
-			entity.Property(e => e.Name)
-				.HasMaxLength(100)
-				.HasColumnName("name");
-			entity.Property(e => e.Price).HasColumnName("price");
-			entity.Property(e => e.Quantity).HasColumnName("quantity");
-			entity.Property(e => e.SerialNumber)
-				.HasMaxLength(200)
-				.IsUnicode(false)
-				.HasColumnName("serialNumber");
-			entity.Property(e => e.Summary)
-				.HasMaxLength(500)
-				.HasColumnName("summary");
+            entity.Property(e => e.ProductId).HasColumnName("productID");
+            entity.Property(e => e.BrandId).HasColumnName("brandID");
+            entity.Property(e => e.CategoryId).HasColumnName("categoryID");
+            entity.Property(e => e.Cover)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("cover");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_at");
+            entity.Property(e => e.Description)
+                .HasMaxLength(500)
+                .HasColumnName("description");
+            entity.Property(e => e.Discount).HasColumnName("discount");
+            entity.Property(e => e.Instock).HasColumnName("instock");
+            entity.Property(e => e.Isdeleted).HasColumnName("isdeleted");
+            entity.Property(e => e.Name)
+                .HasMaxLength(100)
+                .HasColumnName("name");
+            entity.Property(e => e.Price).HasColumnName("price");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
+            entity.Property(e => e.SerialNumber)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("serialNumber");
+            entity.Property(e => e.Summary)
+                .HasMaxLength(500)
+                .HasColumnName("summary");
 
-			entity.HasOne(d => d.Brand).WithMany(p => p.Products)
-				.HasForeignKey(d => d.BrandId)
-				.HasConstraintName("FK__products__brandI__693CA210");
+            entity.HasOne(d => d.Brand).WithMany(p => p.Products)
+                .HasForeignKey(d => d.BrandId)
+                .HasConstraintName("FK__products__brandI__693CA210");
 
-			entity.HasOne(d => d.Category).WithMany(p => p.Products)
-				.HasForeignKey(d => d.CategoryId)
-				.HasConstraintName("FK__products__catego__68487DD7");
+            entity.HasOne(d => d.Category).WithMany(p => p.Products)
+                .HasForeignKey(d => d.CategoryId)
+                .HasConstraintName("FK__products__catego__68487DD7");
+        });
 
-			entity.HasMany(d => d.ProductAttributes).WithMany(p => p.Products)
-				.UsingEntity<Dictionary<string, object>>(
-					"ProductsProductAttribute",
-					r => r.HasOne<ProductAttribute>().WithMany()
-						.HasForeignKey("ProductAttributesId")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("FK__productsP__Produ__6EF57B66"),
-					l => l.HasOne<Product>().WithMany()
-						.HasForeignKey("ProductId")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("FK__productsP__produ__6E01572D"),
-					j =>
-					{
-						j.HasKey("ProductId", "ProductAttributesId").HasName("PK__products__D2840D89C5393243");
-						j.ToTable("productsProduct_attributes");
-						j.IndexerProperty<int>("ProductId").HasColumnName("productID");
-						j.IndexerProperty<int>("ProductAttributesId").HasColumnName("Product_attributes_ID");
-					});
-		});
+        modelBuilder.Entity<ProductAttribute>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__product___3214EC272D629DF7");
 
-		modelBuilder.Entity<ProductAttribute>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__product___3214EC27CAF88387");
+            entity.ToTable("product_attributes");
 
-			entity.ToTable("product_attributes");
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Name)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("name");
+        });
 
-			entity.Property(e => e.Id)
-				.ValueGeneratedNever()
-				.HasColumnName("ID");
-			entity.Property(e => e.CreatedAt)
-				.HasColumnType("datetime")
-				.HasColumnName("created_at");
-			entity.Property(e => e.Name)
-				.HasMaxLength(100)
-				.IsUnicode(false)
-				.HasColumnName("name");
-			entity.Property(e => e.Value)
-				.HasMaxLength(100)
-				.IsUnicode(false)
-				.HasColumnName("value");
-		});
+        modelBuilder.Entity<ProductsProductAttribute>(entity =>
+        {
+            entity.HasKey(e => new { e.ProductId, e.ProductAttributeId }).HasName("PK__products__BA7EB5CBA2476377");
 
-		base.OnModelCreating(modelBuilder);
+            entity.ToTable("productsProduct_attributes");
+
+            entity.Property(e => e.ProductId).HasColumnName("productID");
+            entity.Property(e => e.ProductAttributeId).HasColumnName("Product_attribute_ID");
+            entity.Property(e => e.Value)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("value");
+
+            entity.HasOne(d => d.ProductAttribute).WithMany(p => p.ProductsProductAttributes)
+                .HasForeignKey(d => d.ProductAttributeId)
+                .HasConstraintName("FK__productsP__Produ__531856C7");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.ProductsProductAttributes)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__productsP__produ__5224328E");
+        });
+
+        base.OnModelCreating(modelBuilder);
 	}
 
 	partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
