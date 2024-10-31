@@ -66,6 +66,7 @@ namespace IT_Store
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            services.AddScoped<IProductAttributeRepository, ProductAttributeRepository>();
 
 			services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<CodexContext>();
         }

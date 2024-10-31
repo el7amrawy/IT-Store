@@ -13,8 +13,9 @@ namespace IT_Store
 		Roles,
 		Orders,
 		Admins,
-		Users
-	}
+		Users,
+        ProductAttributes
+    }
 	public static class ExtendedMethodes
 	{
 		[NonAction]

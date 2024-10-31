@@ -48,6 +48,11 @@
 							<i class="align-middle" data-feather="book"></i> <span class="align-middle">Products</span>
 						</a>
 					</li>
+					<li class="sidebar-item @(tab==AdminTabs.ProductAttributes?"active":"")">
+						<a class="sidebar-link" asp-action="index" asp-controller="ProductAttributes">
+							<i class="align-middle" data-feather="book"></i> <span class="align-middle">Product Attributes</span>
+						</a>
+					</li>
 
 					<li class="sidebar-item @(tab==AdminTabs.Brands?"active":"")">
 						<a class="sidebar-link" asp-action="index" asp-controller="Brands">
