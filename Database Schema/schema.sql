@@ -140,15 +140,29 @@ go
 --end
 --go
 
+create table order_statuses(
+statusId int primary key identity,
+name varchar(50) not null unique
+)
+go
+
+INSERT INTO order_statuses (name) VALUES ('Pending');
+INSERT INTO order_statuses (name) VALUES ('Processing');
+INSERT INTO order_statuses (name) VALUES ('Shipped');
+INSERT INTO order_statuses (name) VALUES ('Delivered');
+INSERT INTO order_statuses (name) VALUES ('Cancelled');
+
 create table orders(
 orderID int primary key identity,
 userId int foreign key references AspNetUsers(id),
 addressID int foreign key references addresses(addressID) not null,
+statusId int foreign key references order_statuses(statusId) not null default 1,
 total int not null,
 isdeleted bit not null,
 created_at datetime not null,
 updated_at datetime not null
 )
+go
 
 create table order_items(
 orderID int foreign key references orders(orderID),
