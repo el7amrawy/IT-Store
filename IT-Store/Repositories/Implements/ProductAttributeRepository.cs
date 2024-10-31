@@ -13,7 +13,7 @@ namespace IT_Store.Repositories.Implements
 
 		public override ProductAttribute GetById(int id)
 		{
-			if (IsExisted(id))
+			if (!IsExisted(id))
 				throw new Exception("Product attribute doesn't exist");
 			return _db.ProductAttributes.FirstOrDefault(a => a.Id == id);
 		}

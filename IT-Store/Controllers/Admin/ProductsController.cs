@@ -11,12 +11,13 @@ namespace IT_Store.Controllers.Admin
 	public class ProductsController : Controller
 	{
 		private readonly IProductRepository _repository;
-
-		public ProductsController(IProductRepository repository)
-		{
-			_repository = repository;
-		}
-		[HttpGet]
+		private readonly IProductAttributeRepository _attributeRep;
+        public ProductsController(IProductRepository repository, IProductAttributeRepository attributeRep)
+        {
+            _repository = repository;
+            _attributeRep = attributeRep;
+        }
+        [HttpGet]
 		public IActionResult Index(int pageNumber)
 		{
 			TempData["AdminTabs"] = AdminTabs.Products.ToString();
@@ -33,6 +34,7 @@ namespace IT_Store.Controllers.Admin
 		{
 			ViewData["Categories"] = new SelectList(categoryRep.GetAll(), "CategoryId", "Name");
 			ViewData["Brands"] = new SelectList(brandRep.GetAll(), "BrandId", "Name");
+			ViewData["ProductAttributes"] = new SelectList(_attributeRep.GetAll(), "Id", "Name");
 			return View("~/Views/Admin/Products/Add.cshtml");
 		}
 		[HttpPost]

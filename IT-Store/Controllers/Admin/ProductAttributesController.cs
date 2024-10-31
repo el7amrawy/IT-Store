@@ -37,5 +37,11 @@ namespace IT_Store.Controllers.Admin
             }
             return View("~/Views/Admin/ProductAttributes/Add.cshtml");
 		}
+        [HttpGet]
+        public IActionResult Delete(int id) {
+            _productAttributeRep.Delete(id);
+            _productAttributeRep.Save();
+            return RedirectToAction("Index");
+        }
 	}
 }
