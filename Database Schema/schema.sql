@@ -84,7 +84,7 @@ isdeleted bit not null
 go
 
 create table product_attributes(
-ID int primary key,
+ID int primary key identity,
 name varchar(100) not null,
 created_at datetime not null default getdate()
 )
