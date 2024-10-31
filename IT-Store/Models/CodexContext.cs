@@ -33,6 +33,7 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 
     public virtual DbSet<ProductAttribute> ProductAttributes { get; set; }
     public virtual DbSet<ProductsProductAttribute> ProductsProductAttributes { get; set; }
+    public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		modelBuilder.Entity<Address>(entity =>
@@ -163,35 +164,40 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 				.HasConstraintName("FK__categorie__paren__6383C8BA");
 		});
 
-		modelBuilder.Entity<Order>(entity =>
-		{
-			entity.HasKey(e => e.OrderId).HasName("PK__orders__0809337D1C403214");
+        modelBuilder.Entity<Order>(entity =>
+        {
+            entity.HasKey(e => e.OrderId).HasName("PK__orders__0809337D1C403214");
 
-			entity.ToTable("orders");
+            entity.ToTable("orders");
 
-			entity.Property(e => e.OrderId).HasColumnName("orderID");
-			entity.Property(e => e.AddressId).HasColumnName("addressID");
-			entity.Property(e => e.CreatedAt)
-				.HasColumnType("datetime")
-				.HasColumnName("created_at");
-			entity.Property(e => e.Isdeleted).HasColumnName("isdeleted");
-			entity.Property(e => e.Total).HasColumnName("total");
-			entity.Property(e => e.UpdatedAt)
-				.HasColumnType("datetime")
-				.HasColumnName("updated_at");
-			entity.Property(e => e.UserId).HasColumnName("userId");
+            entity.Property(e => e.OrderId).HasColumnName("orderID");
+            entity.Property(e => e.AddressId).HasColumnName("addressID");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Isdeleted).HasColumnName("isdeleted");
+            entity.Property(e => e.StatusId).HasColumnName("statusId").HasConversion<int>();
+            entity.Property(e => e.Total).HasColumnName("total");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.UserId).HasColumnName("userId");
 
-			entity.HasOne(d => d.Address).WithMany(p => p.Orders)
-				.HasForeignKey(d => d.AddressId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__orders__addressI__236943A5");
+            entity.HasOne(d => d.Address).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.AddressId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__orders__addressI__236943A5");
 
-			entity.HasOne(d => d.User).WithMany(p => p.Orders)
-				.HasForeignKey(d => d.UserId)
-				.HasConstraintName("FK__orders__userId__22751F6C");
-		});
+            entity.HasOne(d => d.Status).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.StatusId)
+                .HasConstraintName("FK__orders__statusId__5E8A0973");
 
-		modelBuilder.Entity<OrderItem>(entity =>
+            entity.HasOne(d => d.User).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__orders__userId__22751F6C");
+        });
+
+        modelBuilder.Entity<OrderItem>(entity =>
 		{
 			entity.HasKey(e => new { e.OrderId, e.ProductId }).HasName("PK__order_it__BAD83E69CCB0EC59");
 
@@ -218,7 +224,22 @@ public partial class CodexContext : IdentityDbContext<User,IdentityRole<int>,int
 				.HasConstraintName("FK__order_ite__produ__47A6A41B");
 		});
 
-		modelBuilder.Entity<ParentCategory>(entity =>
+        modelBuilder.Entity<OrderStatus>(entity =>
+        {
+            entity.HasKey(e => e.StatusId).HasName("PK__order_st__36257A18059CC9B9");
+
+            entity.ToTable("order_statuses");
+
+            entity.HasIndex(e => e.Name, "UQ__order_st__72E12F1B415D78D6").IsUnique();
+
+            entity.Property(e => e.StatusId).HasColumnName("statusId");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<ParentCategory>(entity =>
 		{
 			entity.HasKey(e => e.CategoryId).HasName("PK__parentCa__23CAF1F80D3FF314");
 

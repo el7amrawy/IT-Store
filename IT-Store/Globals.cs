@@ -47,4 +47,12 @@ namespace IT_Store
 			return list;
 		}
 	}
+	public enum OrderStatusEnum
+    {
+        Pending=1,
+        Processing,
+		Shipped,
+        Delivered,
+        Cancelled
+    }
 }

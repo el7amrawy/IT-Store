@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using IT_Store;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IT_Store.Models;
 
@@ -18,12 +20,18 @@ public partial class Order
 	public DateTime UpdatedAt { get; set; }
 
 	public bool Isdeleted { get; set; }
-
-	public virtual Address Address { get; set; } = null!;
+	[Display(Name ="Status")]
+    public int StatusId { get; set; }
+    public virtual Address Address { get; set; } = null!;
 
 	public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
-
 	public virtual ICollection<PaymentDetail> PaymentDetails { get; set; } = new List<PaymentDetail>();
-
-	public virtual User? User { get; set; }
+    public virtual OrderStatus? Status { get; set; }
+    public virtual User? User { get; set; }
+	[NotMapped]
+	public OrderStatusEnum StatusEnum
+    {
+        get => (OrderStatusEnum)StatusId; // Converts StatusId to enum
+        set => StatusId = (int)value;  // Converts enum to StatusId
+    }
 }
