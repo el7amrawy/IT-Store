@@ -86,15 +86,15 @@ go
 create table product_attributes(
 ID int primary key,
 name varchar(100) not null,
-value varchar(100) not null,
-created_at datetime not null
+created_at datetime not null default getdate()
 )
 go
 
 create table productsProduct_attributes(
 productID int foreign key references products(productID),
-Product_attributes_ID int foreign key references product_attributes(ID)
-primary key clustered(productID,Product_attributes_ID)
+Product_attribute_ID int foreign key references product_attributes(ID)on delete cascade,
+value varchar(100) not null
+primary key clustered(productID,Product_attribute_ID)
 )
 go
 
